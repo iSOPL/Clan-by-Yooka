@@ -1,20 +1,99 @@
 options:
 	msg.noperm: &cNie masz uprawnien
 	msg.noname: &cPodaj nazwe gildii
+	msg.guilds.exist: &cGildia nazwie &6&L%arg 2% &cjuz istnieje
+	msg.guilds.create: &2Utworzono gildie &6&L%arg 2%
+	msg.guilds.create.broadcast: &6&L%name of player% &2utworzyl gildie &6&L%arg 2%
+	msg.invite: &2Zaprosiles %arg 2% do gildi
+	msg.invite.player: &2%name of player% zaprosil cie do gildii %{guildname.%name of player%}%
+	msg.offline: &cGracz jest offline
+	msg.invite.noarg: &cPodaj nazwe gracza ktorego chcesz zaprosic
+	msg.invite.nolider: &cTylko Lider moze zapraszac graczy
+	msg.noguilds: &cNie masz gildii...
+	msg.guilds: &cJestes juz w gildii %{guildname.%name of player%}%
+	msg.dolacz.noarg: &cPodaj nazwe gildi do ktorej chcesz dolaczyc
+	msg.guilds.notexist: &cGildia o nazwie %arg 2% nie istnieje
+	msg.dolacz.sukces: &2Dolaczyles o gildii %arg 2%
+	msg.noinvite: &cNie znajdujesz sie na liscie zaproszony
+#Ladowanie ustawien z YML#
 on load:
-	set {gildia.prefixperm} to value "gildie.prefixperm" pulled from "%script%"
+	set {guild.prefixperm} to value "guild.prefixperm" pulled from "%script%"
 
 command /gildia [<text>] [<text>] [<text>]:
 	trigger:
 		if arg 1 is not set:
-			if player doesn't have permission "%{gildie.prefixperm}%.use":
+			if player doesn't have permission "%{guild.prefixperm}%.use":
 				send "{@msg.noperm}"
 				stop
 		if arg 1 is "zaloz":
-			if player doesn't have permission "%{gildie.prefixperm}%.use.zaloz":
+			if player doesn't have permission "%{guild.prefixperm}%.use.zaloz":
 				send "{@msg.noperm}"
 				stop
 			if arg 2 is not set:
 				send "{@msg.noname}"
 				stop
-			add name of player to {gildia.%arg 2%::*}
+			if {guild.%arg 2%::*} is set:
+				send "{@msg.guilds.exist}"
+				stop
+			add name of player to {guild.%arg 2%::*}
+			add arg 2 to {guilds::*}
+			set {guildname.%name of player%} to arg 2
+			add name of player to {guildlider.%arg 2%::*}
+			send "{@msg.guilds.create}"
+			broadcast "{@msg.guilds.create.broadcast}"
+			stop
+		if arg 1 is "zapros":
+			if player doesn't have permission "%{guild.prefixperm}%.use.zapros":
+				send "{@msg.noperm}"
+				stop
+			if {guildname.%name of player%} is not set:
+				send "{@msg.noguilds}"
+				stop
+			if arg 2 is not set:
+				send "{@msg.invite.noarg}"
+				stop
+			if arg 2 parsed as player is not set:
+				send "{@msg.offline}"
+				stop
+			loop {guildlider.%{guildname.%name of player%}%::*}:
+				if loop-value is name of player:
+					add arg 2 to {guildinvite.%{guildname.%name of player%}%::*}
+					send "{@msg.invite}"
+					send "{@msg.invite.player}" to arg 2 parsed as player
+					stop
+			send "{@msg.invite.nolider}"
+			stop
+
+		if arg 1 is "dolacz":
+			if player doesn't have permission "%{guild.prefixperm}%.use.dolacz":
+				send "{@msg.noperm}"
+				stop
+			if {guildname.%name of player%} is set:
+				send "{@msg.guilds}"
+				stop
+			if arg 2 is not set:
+				send "{@msg.dolacz.noarg}"
+				stop
+			if {guild.%arg 2%::*} is not set:
+				send "{@msg.guilds.notexist}"
+				stop
+			loop {guildinvite.%arg 2%::*}:
+				if loop-value is name of player:
+					add name of player to {guild.%arg 2%::*}
+					remove name of player from {guildinvite.%arg 2%::*}
+					send "{@msg.dolacz.sukces}"
+					stop
+			send "{@msg.noinvite}"
+
+
+command /gildie:
+	trigger:
+		if player doesn't have permission "%{guild.prefixperm}%.use.list":
+			send "{@msg.noperm}"
+			stop
+		if size of {guilds::*} is smaller than 1:
+			send "&cLista gildii jest pusta."
+			stop
+		send "&6&LLista Gildi"
+		loop {guilds::*}:
+			send "%loop-value%"
