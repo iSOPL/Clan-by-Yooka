@@ -1,1 +1,12 @@
 options:
+	msg.noperm: &cNie masz uprawnien
+
+on load:
+	set {gildia.prefixperm} to value "gildie.prefixperm" pulled from "%script%"
+
+command /gildia [<text>] [<text>] [<text>]:
+	trigger:
+		if arg 1 is not set:
+			if player doesn't have permission "%{gildie.prefixperm}%.use":
+				send "{@msg.noperm}"
+				stop
