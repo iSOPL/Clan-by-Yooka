@@ -15,6 +15,13 @@ options:
 	msg.guilds.notexist: &cGildia o nazwie %arg 2% nie istnieje
 	msg.dolacz.sukces: &2Dolaczyles o gildii %arg 2%
 	msg.noinvite: &cNie znajdujesz sie na liscie zaproszony
+	msg.nopvp.guilds: &cNie mozesz atakowac %victim%
+	msg.opusc.noarg: &cPodaj nazwe gildii ktora chcesz opuscic
+	msg.opusc.error: &cNie jestes w gildii %arg 2%
+	msg.opusc.sukces: &2Opusciles gildie &c%arg 2%
+	msg.wypros.noarg: &cPodaj nazwe gracza ktorego chesz wyprosic
+	msg.wypros.nolider: &cTylko lider moze wyprosic gracza
+
 #Ladowanie ustawien z YML#
 on load:
 	set {guild.prefixperm} to value "guild.prefixperm" pulled from "%script%"
@@ -41,6 +48,9 @@ command /gildia [<text>] [<text>] [<text>]:
 			add name of player to {guildlider.%arg 2%::*}
 			send "{@msg.guilds.create}"
 			broadcast "{@msg.guilds.create.broadcast}"
+			#Dodatkowe#
+			set {staty.guild.death.%{guildname.%name of player%}%} to 0
+			set {staty.guild.kills.%{guildname.%name of player%}%} to 0
 			stop
 		if arg 1 is "zapros":
 			if player doesn't have permission "%{guild.prefixperm}%.use.zapros":
@@ -85,6 +95,63 @@ command /gildia [<text>] [<text>] [<text>]:
 					stop
 			send "{@msg.noinvite}"
 
+		if arg 1 is "opusc":
+			if player doesn't have permission "%{guild.prefixperm}%.use.opusc":
+				send "{@msg.noperm}"
+				stop
+			if arg 2 is not set:
+				send "{@msg.opusc.noarg}"
+				stop
+			if {guild.%arg 2%::*} is not set:
+				send "{@msg.guilds.notexist}"
+				stop
+			if {guildname.%name of player%} is not arg 2:
+				send "{@msg.opusc.error}"
+				stop
+			remove name of player from {guild.%arg 2%::*}
+			delete {guildname.%name of player%}
+			send "{@msg.opusc.sukces}"
+
+		if arg 1 is "wypros":
+			if player doesn't have permission "%{guild.prefixperm}%.use.wypros":
+				send "{@msg.noperm}"
+				stop
+			if {guildname.%name of player%} is not set:
+				send "{@msg.noguilds}"
+				stop
+			if arg 2 is not set:
+				send "{@msg.wypros.noarg}"
+				stop
+			loop {guildlider.%{guildname.%name of player%}%::*}:
+				if loop-value is name of player:
+					loop {guild.%{guildname.%name of player%}%::*}:
+						if loop-value-2 is arg 2:
+							remove arg 2 from {guild.%{guildname.%name of player%}%::*}
+							send "&cWyprosiles %arg 2% z gildii %{guildname.%name of player%}%"
+							stop
+					send "%arg 2% nie jest w twojej gildi"
+					stop
+			send "{@msg.wypros.nolider}Tylko lider moze wyprosic gracza"
+			stop
+
+		if arg 1 is "info":
+			if arg 2 is not set:
+				if player doesn't have permission "%{guild.prefixperm}%.use.info":
+					send "{@msg.noperm}"
+					stop
+				if {guildname.%name of player%} is not set:
+					send "{@msg.noguilds}"
+					stop
+				send "&6&LLista czlonkow gildii &2%{guildname.%name of player%}%"
+				loop {guild.%{guildname.%name of player%}%::*}:
+					send "%loop-value%"
+			if arg 2 is not empty:
+				if {guild.%arg 2%::*} is not set:
+					send "{@msg.guilds.notexist}"
+					stop
+				send "&6&LLista czlonkow gildii &2%arg 2%"	
+				loop {guild.%arg 2%::*}:
+					send "%loop-value%"
 
 command /gildie:
 	trigger:
@@ -94,6 +161,20 @@ command /gildie:
 		if size of {guilds::*} is smaller than 1:
 			send "&cLista gildii jest pusta."
 			stop
-		send "&6&LLista Gildi"
+		send "&6&LLista Gildii"
 		loop {guilds::*}:
 			send "%loop-value%"
+
+
+on damage:
+	if {guildname.%attacker%} is {guildname.%victim%}:
+		cancel event
+		send "{@msg.nopvp.guilds}"
+
+on death:
+	victim is a player
+	attacker is a player
+	if {guildname.%victim%} is set:
+		add 1 to {staty.guild.death.%{guildname.%victim%}%}
+	if {guildname.%attacker%} is set:
+		add 1 to {staty.guild.kills.%{guildname.%attacker%}%}
