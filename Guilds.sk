@@ -1,1 +1,20 @@
-s
+options:
+	msg.noperm: &cNie masz uprawnien
+	msg.noname: &cPodaj nazwe gildii
+on load:
+	set {gildia.prefixperm} to value "gildie.prefixperm" pulled from "%script%"
+
+command /gildia [<text>] [<text>] [<text>]:
+	trigger:
+		if arg 1 is not set:
+			if player doesn't have permission "%{gildie.prefixperm}%.use":
+				send "{@msg.noperm}"
+				stop
+		if arg 1 is "zaloz":
+			if player doesn't have permission "%{gildie.prefixperm}%.use.zaloz":
+				send "{@msg.noperm}"
+				stop
+			if arg 2 is not set:
+				send "{@msg.noname}"
+				stop
+			add name of player to {gildia.%arg 2%::*}
