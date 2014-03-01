@@ -1,0 +1,1049 @@
+#------------------------------------------------------#
+# Licencja: Clan by Yooka                              #
+#------------------------------------------------------#
+#  Nie zezwalam na:                                    #
+#- Zarabianie na skrypcie                              #
+#- Udostepnianiu skryptu innym bez zgody autora        #
+#- Usuwanie tresci zawierajacych iformacje autora      #
+#- Podszywanie sie pod autora                          #
+#------------------------------------------------------#
+# Mylnie odczytana licencja nie zwalnia z              #
+# przestrzegania jej                                   #
+#------------------------------------------------------#
+
+
+# {clan.%name of player%} - nazwa klanu #
+# {clans::*} - Lista klnow #
+# {clan-member.%{clan.%name of player%}%::*} - Lista czlonkow klanu #
+# {clan-inv.%{clan.%name of player%}%::*} - Lista zaproszonych do klanu #
+# {clan-opis::%{clan.%name of player%}%} - Opis  #
+# {clan-tag::%{clan.%name of player%}%} - Tag  #
+
+aliases:
+	other = 23, 61
+on load:
+	set {clanconf.perm} to value "clan.perm" pulled from "%script%"
+	set {clanconf.worldeditregion} to value "clan.worldeditregion" pulled from "%script%" parsed as boolean
+	set {clanconf.worldclaim} to value "clan.worldclaim" pulled from "%script%"
+	set {clanconf.itempay} to value "clan.itempay" pulled from "%script%" parsed as boolean
+	set {clanconf.maxcalim} to value "clan.maxcalim" pulled from "%script%" parsed as number
+	set {clanconf.maxmember} to value "clan.maxmember" pulled from "%script%" parsed as number
+	set {clanconf.oczekiwanie} to value "clan.oczekiwanie" pulled from "%script%" parsed as boolean
+	set {clanconf.czasoczekiwania} to value "clan.czasoczekiwania" pulled from "%script%" parsed as number
+	set {clanconf.msgnoplace} to value "clan.msgnoplace" pulled from "%script%" parsed as boolean
+	set {clanconf.msgnobreak} to value "clan.msgnobreak" pulled from "%script%" parsed as boolean
+	set {clanconf.protchest} to value "clan.protchest" pulled from "%script%" parsed as boolean
+	set {clanconf.protender} to value "clan.protender" pulled from "%script%" parsed as boolean
+	set {clanconf.protother} to value "clan.protother" pulled from "%script%" parsed as boolean
+	set {clanconf.tagsize} to value "clan.tagsize" pulled from "%script%" parsed as number
+	set {clanconf.ignition} to value "clan.ignition" pulled from "%script%" parsed as boolean
+	set {clanconf.creeper} to value "clan.creeper" pulled from "%script%" parsed as boolean
+	loop 20 times:
+		set {pay.create::%loop-number%} to value "paycreate.item-%loop-number%" pulled from "%script%" parsed as item type
+
+#Rangi#
+	set {clanconf.zalorzyciel} to value "rangi.zalorzyciel" pulled from "%script%"
+	set {clanconf.officer} to value "rangi.officer" pulled from "%script%"
+	set {clanconf.member} to value "rangi.member" pulled from "%script%"
+	set {clanconf.recruit} to value "rangi.recruit" pulled from "%script%"
+
+# Wiadomosci #
+	set {clanmsg.noperm} to coloured value "msg.noperm" pulled from "%script%"
+	set {clanmsg.clanset} to coloured value "msg.clanset" pulled from "%script%"
+	set {clanmsg.clanexist} to coloured value "msg.clanexist" pulled from "%script%"
+	set {clanmsg.clannoname} to coloured value "msg.clannoname" pulled from "%script%"
+	set {clanmsg.nosymbol} to coloured value "msg.nosymbol" pulled from "%script%"
+	set {clanmsg.noclan} to coloured value "msg.noclan" pulled from "%script%"
+	set {clanmsg.noclans} to coloured value "msg.noclans" pulled from "%script%"
+	set {clanmsg.clancreate} to coloured value "msg.clancreate" pulled from "%script%"
+	set {clanmsg.norequired} to coloured value "msg.norequired" pulled from "%script%"
+	set {clanmsg.reload} to coloured value "msg.reload" pulled from "%script%"
+	set {clanmsg.clandelete} to coloured value "msg.clandelete" pulled from "%script%"
+	set {clanmsg.nopage} to coloured value "msg.nopage" pulled from "%script%"
+	set {clanmsg.nolider} to coloured value "msg.nolider" pulled from "%script%"
+	set {clanmsg.clanplayerset} to coloured value "msg.clanplayerset" pulled from "%script%"
+	set {clanmsg.ivitenoplayer} to coloured value "msg.ivitenoplayer" pulled from "%script%"
+	set {clanmsg.offline} to coloured value "msg.offline" pulled from "%script%"
+	set {clanmsg.invite} to coloured value "msg.invite" pulled from "%script%"
+	set {clanmsg.inviteplayer} to coloured value "msg.inviteplayer" pulled from "%script%"
+	set {clanmsg.invited} to coloured value "msg.invited" pulled from "%script%"
+	set {clanmsg.emptyinvite} to coloured value "msg.emptyinvite" pulled from "%script%"
+	set {clanmsg.listinvite} to coloured value "msg.listinvite" pulled from "%script%"
+	set {clanmsg.memberclan} to coloured value "msg.memberclan" pulled from "%script%"
+	set {clanmsg.joinclan} to coloured value "msg.joinclan" pulled from "%script%"
+	set {clanmsg.joinmsg} to coloured value "msg.joinmsg" pulled from "%script%"
+	set {clanmsg.noinvite} to coloured value "msg.noinvite" pulled from "%script%"
+	set {clanmsg.noclaim} to coloured value "msg.noclaim" pulled from "%script%"
+	set {clanmsg.nounclaim} to coloured value "msg.nounclaim" pulled from "%script%"
+	set {clanmsg.unclaim} to coloured value "msg.unclaim" pulled from "%script%"
+	set {clanmsg.claim} to coloured value "msg.claim" pulled from "%script%"
+	set {clanmsg.freeland} to coloured value "msg.freeland" pulled from "%script%"
+	set {clanmsg.claimed} to coloured value "msg.claimed" pulled from "%script%"
+	set {clanmsg.maxclaim} to coloured value "msg.maxclaim" pulled from "%script%"
+	set {clanmsg.clanclaim} to coloured value "msg.clanclaim" pulled from "%script%"
+	set {clanmsg.nohome} to coloured value "msg.nohome" pulled from "%script%"
+	set {clanmsg.sethome} to coloured value "msg.sethome" pulled from "%script%"
+	set {clanmsg.nosethome} to coloured value "msg.nosethome" pulled from "%script%"
+	set {clanmsg.tpdeny} to coloured value "msg.tpdeny" pulled from "%script%"
+	set {clanmsg.nomove} to coloured value "msg.nomove" pulled from "%script%"
+	set {clanmsg.delay} to coloured value "msg.delay" pulled from "%script%"
+	set {clanmsg.hometp} to coloured value "msg.hometp" pulled from "%script%"
+	set {clanmsg.noliderleave} to coloured value "msg.noliderleave" pulled from "%script%"
+	set {clanmsg.clanleave} to coloured value "msg.clanleave" pulled from "%script%"
+	set {clanmsg.memberleave} to coloured value "msg.memberleave" pulled from "%script%"
+	set {clanmsg.argnoclan} to coloured value "msg.argnoclan" pulled from "%script%"
+	set {clanmsg.nokick} to coloured value "msg.nokick" pulled from "%script%"
+	set {clanmsg.kick} to coloured value "msg.kick" pulled from "%script%"
+	set {clanmsg.memberkick} to coloured value "msg.memberkick" pulled from "%script%"
+	set {clanmsg.noplace} to coloured value "msg.noplace" pulled from "%script%"
+	set {clanmsg.nobreak} to coloured value "msg.nobreak" pulled from "%script%"
+	set {clanmsg.notag} to coloured value "msg.notag" pulled from "%script%"
+	set {clanmsg.badsizetag} to coloured value "msg.badsizetag" pulled from "%script%"
+	set {clanmsg.occupiedtag} to coloured value "msg.occupiedtag" pulled from "%script%"
+	set {clanmsg.tagset} to coloured value "msg.tagset" pulled from "%script%"
+	set {clanmsg.noopis} to coloured value "msg.noopis" pulled from "%script%"
+	set {clanmsg.badopis} to coloured value "msg.badopis" pulled from "%script%"
+	set {clanmsg.setopis} to coloured value "msg.setopis" pulled from "%script%"
+	set {clanmsg.noworld} to coloured value "msg.noworld" pulled from "%script%"
+	set {clanmsg.nofoundclan} to coloured value "msg.nofoundclan" pulled from "%script%"
+	set {clanmsg.regionset} to coloured value "msg.regionset" pulled from "%script%"
+	set {clanmsg.chunkempty} to coloured value "msg.chunkempty" pulled from "%script%"
+
+	loop 20 times:
+		set {clanreg::%loop-number%} to coloured value "reg.no-%loop-number%" pulled from "%script%"
+		set {clanhelp::%loop-number%} to coloured value "help.co-%loop-number%" pulled from "%script%"
+
+	set {kierunek::south.1} to "&7---&6[N]&7---&7-------------------------------"
+	set {kierunek::south.2} to "&6[W]&7----&6[E]&7-------------------------------"
+	set {kierunek::south.3} to "&7---&c[S]&7---&7-------------------------------"
+	set {kierunek::north.1} to "&7---&c[N]&7---&7-------------------------------"
+	set {kierunek::north.2} to "&6[W]&7----&6[E]&7-------------------------------"
+	set {kierunek::north.3} to "&7---&6[S]&7---&7-------------------------------"
+	set {kierunek::east.1} to "&7---&6[N]&7---&7-------------------------------"
+	set {kierunek::east.2} to "&6[W]&7----&c[E]&7-------------------------------"
+	set {kierunek::east.3} to "&7---&6[S]&7---&7-------------------------------"
+	set {kierunek::west.1} to "&7---&6[N]&7---&7-------------------------------"
+	set {kierunek::west.2} to "&c[W]&7----&6[E]&7-------------------------------"
+	set {kierunek::west.3} to "&7---&6[S]&7---&7-------------------------------"
+	set {kierunek::above.1} to "&7---&6[N]&7---&7-------------------------------"
+	set {kierunek::above.2} to "&6[W]&7----&6[E]&7-------------------------------"
+	set {kierunek::above.3} to "&7---&6[S]&7---&7-------------------------------"
+	set {kierunek::below.1} to "&7---&6[N]&7---&7-------------------------------"
+	set {kierunek::below.2} to "&6[W]&7----&6[E]&7-------------------------------"
+	set {kierunek::below.3} to "&7---&6[S]&7---&7-------------------------------"
+
+	set {random.color::0} to coloured "<red>"
+	set {random.color::1} to coloured "<blue>"
+	set {random.color::2} to coloured "<yellow>"
+	set {random.color::3} to coloured "<green>"
+	set {random.color::4} to coloured "<purple>"
+	set {random.color::5} to coloured "<orange>"
+	set {random.color::6} to coloured "<magenta>"
+	set {random.color::7} to coloured "<cyan>"
+	set {random.color::8} to coloured "<pink>"
+
+	set {badsymbol::1} to "?"
+	set {badsymbol::2} to "@"
+	set {badsymbol::3} to "$"
+	set {badsymbol::4} to "^"
+	set {badsymbol::5} to "&"
+	set {badsymbol::6} to "*"
+	set {badsymbol::7} to "("
+	set {badsymbol::8} to ")"
+	set {badsymbol::9} to "-"
+	set {badsymbol::10} to "+"
+	set {badsymbol::11} to "="
+	set {badsymbol::12} to "|"
+	set {badsymbol::13} to "\"
+	set {badsymbol::14} to "]"
+	set {badsymbol::15} to "["
+	set {badsymbol::16} to "}"
+	set {badsymbol::17} to "{"
+	set {badsymbol::18} to "'"
+	set {badsymbol::19} to "/"
+	set {badsymbol::20} to ";"
+	set {badsymbol::21} to ":"
+	set {badsymbol::22} to "?"
+	set {badsymbol::23} to "."
+	set {badsymbol::24} to ">"
+	set {badsymbol::25} to ","
+	set {badsymbol::26} to "<"
+	set {badsymbol::27} to "kurwa"
+	set {badsymbol::28} to "huj"
+	set {badsymbol::29} to "chuj"
+	set {badsymbol::30} to "dziwka"
+
+command /clan [<text>] [<text>]:
+	executable by: players
+	description: Clan by Yooka
+	aliases: c
+	trigger:
+		if arg 1 is not set:
+			if player doesn't have permission "%{clanconf.perm}%.use.info":
+				send "%{clanmsg.noperm}%"
+				stop
+			
+
+			stop
+		if arg 1 is "create" or "utworz" or "stworz":
+			if player doesn't have permission "%{clanconf.perm}%.use.create":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is set:
+				send "%{clanmsg.clanset}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.clannoname}%"
+				stop
+			loop {badsymbol::*}:
+				if arg 2 contains "%loop-value%":
+					send "%{clanmsg.nosymbol}%"
+					stop
+			loop {clans::*}:
+				if loop-value is arg 2:
+					send "%{clanmsg.clanexist}%"
+					stop
+			if {clanconf.itempay} is true:
+				clear {_clan-required::*}
+				loop 20 times:
+					if player doesn't have {pay.create::%loop-number%}:
+						add {pay.create::%loop-number%} to {_clan-required::*}
+				if size of {_clan-required::*} is greater than 0:
+					send "%{clanmsg.norequired}%: &6%{_clan-required::*}%"
+					stop
+				loop 20 times:
+					remove {pay.create::%loop-number%} from player
+			set {clan.%name of player%} to arg 2
+			add arg 2 to {clans::*}
+			add name of player to {clan-member.%{clan.%name of player%}%::*}
+			set {clan-ranga.%name of player%} to {clanconf.zalorzyciel}
+			send "%{clanmsg.clancreate}% %arg 2%"
+			stop
+
+		if arg 1 is "usun" or "del":
+			if player doesn't have permission "%{clanconf.perm}%.use.delete":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			loop {clan-member.%{_clan}%::*}:
+				delete {clan.%loop-value%}
+				set {clan-ranga.%loop-value%} to "brak"
+			remove {_clan} from {clans::*}
+			delete {clan-member.%{_clan}%::*}
+			delete {clan-opis::%{_clan}%}
+			delete {clan-tag::%{_clan}%}
+			loop {clan-chunk.%{_clan}%::*}:
+				delete {clan-claim::%loop-value%}
+			wait 2 tick
+			delete {clan-chunk.%{_clan}%::*}
+			send "%{clanmsg.clandelete}%"
+			stop
+
+			
+		if arg 1 is "zapros" or "invite":
+			if player doesn't have permission "%{clanconf.perm}%.use.invite":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.ivitenoplayer}%"
+				stop
+			if arg 2 parsed as player is not set:
+				send "%{clanmsg.offline}%"
+				stop
+			if {clan.%arg 2%} is set:
+				send "%{clanmsg.clanplayerset}%"
+				stop
+			loop {clan-member.%{clan.%name of player%}%::*}:
+				if loop-value is arg 2:
+					send "%{clanmsg.memberclan}%"
+					stop
+			loop {clan-inv.%{clan.%name of player%}%::*}:
+				if loop-value is arg 2:
+					send "%{clanmsg.invited}%"
+					stop
+			add arg 2 to {clan-inv.%{clan.%name of player%}%::*}
+			send "%{clanmsg.invite}% %arg 2%"
+			send "%{clanmsg.inviteplayer}% %{clan.%name of player%}%" to arg 2 parsed as player
+			stop
+
+		if arg 1 is "tag":
+			if player doesn't have permission "%{clanconf.perm}%.use.tag":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.notag}%"
+				stop
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			if length of the string arg 2 is bigger than {clanconf.tagsize}:
+				send "%{clanmsg.badsizetag}%"
+				stop
+			loop {clan-tag::*}:
+				if loop-value is arg 2:
+					send "%{clanmsg.occupiedtag}%"
+					stop
+				if arg 2 contains "%loop-value%":
+					send "%{clanmsg.occupiedtag}%"
+					stop
+			set {clan-tag::%{clan.%name of player%}%} to coloured arg 2
+			send "%{clanmsg.tagset}% %{clan-tag::%{clan.%name of player%}%}%"
+			stop
+
+		if arg 1 is "opis":	
+			if player doesn't have permission "%{clanconf.perm}%.use.opis":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.noopis}%"
+				stop
+			set {_opis} to arg 2
+			loop {badsymbol::*}:
+				if {_opis} contains "%loop-value%":
+					send "%{clanmsg.badopis}%"
+					stop
+			set {clan-opis::%{clan.%name of player%}%} to {_opis}
+			send "%{clanmsg.setopis}% %{_opis}%"
+			stop
+
+		if arg 1 is "zaproszeni":
+			if player doesn't have permission "%{clanconf.perm}%.use.invited":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if size of {clan-inv.%{clan.%name of player%}%::*} is smaller than 1:
+				send "%{clanmsg.emptyinvite}%"
+				stop
+			send "%{clanmsg.listinvite}%"
+			loop {clan-inv.%{clan.%name of player%}%::*}:
+				send "&6%loop-index%. &3%loop-value%"
+
+		if arg 1 is "akceptuj" or "join":
+			if player doesn't have permission "%{clanconf.perm}%.use.accept":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.clannoname}%"
+				stop
+			if {clan.%name of player%} is set:
+				send "%{clanmsg.clanset}%"
+				stop
+			loop {clan-inv.%arg 2%::*}:
+				if loop-value is name of player:
+					set {clan.%name of player%} to arg 2
+					set {clan-ranga.%name of player%} to {clanconf.member}
+					add name of player to {clan-member.%arg 2%::*}
+					remove name of player from {clan-inv.%arg 2%::*}
+					send "%{clanmsg.joinclan}% %arg 2%"
+					loop {clan-member.%arg 2%::*}:
+						if loop-value-2 parsed as player is online:
+							send "&6%name of player% %{clanmsg.joinmsg}%" to loop-value-2 parsed as player
+					stop
+			send "%{clanmsg.noinvite}%"
+			stop
+
+		if arg 1 is "opusc" or "leave":
+			if player doesn't have permission "%{clanconf.perm}%.use.leave":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if {clan-ranga.%name of player%} is {clanconf.zalorzyciel}:
+				send "%{clanmsg.noliderleave}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			remove name of player from {clan-member.%{_clan}%::*}
+			delete {clan.%name of player%}
+			set {clan-ranga.%name of player%} to "brak"
+			send "%{clanmsg.clanleave}%"
+			loop {clan-member.%{_clan}%::*}:
+				if loop-value parsed as player is online:
+					send "&6&L%name of player% %{clanmsg.memberleave}%" to loop-value parsed as player
+			stop
+
+		if arg 1 is "kick" or "wypros":
+			if player doesn't have permission "%{clanconf.perm}%.use.kick":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.ivitenoplayer}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			if {clan.%arg 2%} is not set:
+				send "%{clanmsg.argnoclan}%"
+				stop
+			if {clan.%arg 2%} is not {_clan}:
+				send "%{clanmsg.nokick}%"
+				stop
+			remove arg 2 from {clan-member.%{_clan}%::*}
+			delete {clan.%arg 2%}
+			set {clan-ranga.%name of player%} to "brak"
+			if arg 2 parsed as player is online:
+				send "%{clanmsg.memberkick}%" to arg 2 parsed as player
+			loop {clan-member.%{_clan}%::*}:
+				if loop-value parsed as player is online:
+					send "&6&L%arg 2% %{clanmsg.kick}%"
+			stop
+
+		if arg 1 is "info":
+			if player doesn't have permission "%{clanconf.perm}%.use.info":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				if {clan.%name of player%} is not set:
+					send "%{clanmsg.clannoname}%"
+					stop
+
+				send "Gildia: %{clan.%name of player%}%"
+				if {clan-opis::%{clan.%name of player%}%} is set:
+					send "Opis: %{clan-opis::%{clan.%name of player%}%}%"
+				if {clan-tag::%{clan.%name of player%}%} is set:
+					send "Tag: %{clan-tag::%{clan.%name of player%}%}%"
+				loop {clan-member.%{clan.%name of player%}%::*}:
+					if {clan-ranga.%loop-value%} is {clanconf.zalorzyciel}:
+						add "%loop-value%" to {_lider::*}
+				
+				send "Lider: %{_lider::*}%"
+				loop {clan-member.%{clan.%name of player%}%::*}:
+					if loop-value parsed as player is online:
+						add loop-value to {_clan.online::*}
+				send "Online: %{_clan.online::*}%"
+				send "Czlonkowie: %{clan-member.%{clan.%name of player%}%::*}%"
+			if arg 2 is set:
+				if {clan-member.%arg 2%::*} is not set:
+					send "%{clanmsg.nofoundclan}%"
+					stop
+				set {_clan} to arg 2
+				clear {_clan.online::*}
+				send "Gildia: %{_clan}%"
+				if {clan-opis::%{_clan}%} is set:
+					send "Opis: %{clan-opis::%{_clan}%}%"
+				if {clan-tag::%{_clan}%} is set:
+					send "Tag: %{clan-tag::%{_clan}%}%"
+				loop {clan-member.%{_clan}%::*}:
+					if {clan-ranga.%loop-value%} is {clanconf.zalorzyciel}:
+						add "%loop-value%" to {_lider::*}
+				
+				send "Lider: %{_lider::*}%"
+				loop {clan-member.%{_clan}%::*}:
+					if loop-value parsed as player is online:
+						add loop-value to {_clan.online::*}
+				send "Online: %{_clan.online::*}%"
+				send "Czlonkowie: %{clan-member.%{_clan}%::*}%"
+
+
+
+		if arg 1 is "lista" or "list":
+			if player doesn't have permission "%{clanconf.perm}%.use.list":
+				send "%{clanmsg.noperm}%"
+				stop
+			set {_strona} to arg 2 parsed as number
+			if {_strona} is not set:
+				set {_strona} to 1
+			set {_liczbagildi} to size of {clans::*}
+			set {_liczba-stron} to ceil({_liczbagildi}/10)
+			if {_liczba-stron} is smaller than 1:
+				set {_liczba-stron} to 1
+			if {_strona} is smaller than 1:
+				send "%{clanmsg.nopage}%"
+				stop
+			if {_strona} is greater than {_liczba-stron}:
+				send "%{clanmsg.nopage}%"
+				stop
+			if size of {clans::*} is smaller than 1:
+				send "%{clanmsg.noclans}%"
+				stop
+			clear {_clans::*}
+			loop {clans::*}:
+				add loop-value to {_clans::*}
+			send "&6&LLista Klanow &3Strona: &2%{_strona}%&6/&2%{_liczba-stron}%"
+			loop {_liczbagildi} times:
+				set {_lista} to ({_strona}-1)*10
+				add loop-number to {_lista}
+				if {_clans::%{_lista}%} is not set:
+					stop
+				send "&6%{_lista}%. &3%{_clans::%{_lista}%}%"
+				if {_lista} is equal to 10:
+					stop
+
+		if arg 1 is "regulamin":
+			if player doesn't have permission "%{clanconf.perm}%.use.regulamin":
+				send "%{clanmsg.noperm}%"
+				stop
+			set {_strona} to arg 2 parsed as number
+			if {_strona} is not set:
+				set {_strona} to 1
+			set {_liczbawpisow} to size of {clanreg::*}
+			set {_liczba-stron} to ceil({_liczbawpisow}/10)
+			if {_liczba-stron} is smaller than 1:
+				set {_liczba-stron} to 1
+			if {_strona} is smaller than 1:
+				send "%{clanmsg.nopage}%"
+				stop
+			if {_strona} is greater than {_liczba-stron}:
+				send "%{clanmsg.nopage}%"
+				stop
+			if size of {clanreg::*} is smaller than 1:
+				send "Nie znaleziono wpisu"
+				stop
+			loop {clanreg::*}:
+				add loop-value to {_clanreg::*}
+			send "&6&LRegulamin &3Strona: &2%{_strona}%&6/&2%{_liczba-stron}%"
+			loop {_liczbawpisow} times:
+				set {_lista} to ({_strona}-1)*10
+				add loop-number to {_lista}
+				if {_clanreg::%{_lista}%} is not set:
+					stop
+				send "&6%{_lista}%. %{_clanreg::%{_lista}%}%"
+				if {_lista} is equal to 10:
+					stop
+
+		if arg 1 is "help" or "h" or "pomoc":
+			if player doesn't have permission "%{clanconf.perm}%.use.pomoc":
+				send "%{clanmsg.noperm}%"
+				stop
+			set {_strona} to arg 2 parsed as number
+			if {_strona} is not set:
+				set {_strona} to 1
+			set {_liczbawpisow} to size of {clanhelp::*}
+			set {_liczba-stron} to ceil({_liczbawpisow}/10)
+			if {_liczba-stron} is smaller than 1:
+				set {_liczba-stron} to 1
+			if {_strona} is smaller than 1:
+				send "%{clanmsg.nopage}%"
+				stop
+			if {_strona} is greater than {_liczba-stron}:
+				send "%{clanmsg.nopage}%"
+				stop
+			if size of {clanhelp::*} is smaller than 1:
+				send "Nie znaleziono wpisu"
+				stop
+			loop {clanhelp::*}:
+				add loop-value to {_clanhelp::*}
+			send "&6&LPomoc &3Strona: &2%{_strona}%&6/&2%{_liczba-stron}%"
+			loop {_liczbawpisow} times:
+				set {_lista} to ({_strona}-1)*10
+				add loop-number to {_lista}
+				if {_clanhelp::%{_lista}%} is not set:
+					stop
+				send "&6%{_lista}%. %{_clanhelp::%{_lista}%}%"
+				if {_lista} is equal to 10:
+					stop
+		if arg 1 is "przedmioty":
+			if player doesn't have permission "%{clanconf.perm}%.use.przedmioty":
+				send "%{clanmsg.noperm}%"
+				stop
+			set {_strona} to arg 2 parsed as number
+			if {_strona} is not set:
+				set {_strona} to 1
+			set {_liczbawpisow} to size of {pay.create::*}
+			set {_liczba-stron} to ceil({_liczbawpisow}/10)
+			if {_liczba-stron} is smaller than 1:
+				set {_liczba-stron} to 1
+			if {_strona} is smaller than 1:
+				send "%{clanmsg.nopage}%"
+				stop
+			if {_strona} is greater than {_liczba-stron}:
+				send "%{clanmsg.nopage}%"
+				stop
+			if size of {pay.create::*} is smaller than 1:
+				send "Nie znaleziono przedmiotow"
+				stop
+			loop {pay.create::*}:
+				add loop-value to {_pay.create::*}
+			send "&6&LPrzedmioty &3Strona: &2%{_strona}%&6/&2%{_liczba-stron}%"
+			loop {_liczbawpisow} times:
+				set {_lista} to ({_strona}-1)*10
+				add loop-number to {_lista}
+				if {_pay.create::%{_lista}%} is air:
+					stop
+				send "&6%{_lista}%.%{random.color::%random integer between 0 and 8%}%%{_pay.create::%{_lista}%}%"
+				if {_lista} is equal to 10:
+					stop	
+		if arg 1 is "claim":
+			if player doesn't have permission "%{clanconf.perm}%.use.claim":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if player's world is not {clanconf.worldclaim}:
+				send "%{clanmsg.noworld}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			if size of {clan-chunk.%{_clan}%::*} is equal to {clanconf.maxcalim}:
+				send "%{clanmsg.maxclaim}%"
+				stop
+			if {clanconf.worldeditregion} is true:
+				set {_regions::*} to regions at location of player
+				if size of {_regions::*} is greater than 0:
+					send "%{clanmsg.regionset}%"
+					stop
+			if {clan-claim::%chunk at player%} is set:
+				send "%{clanmsg.clanclaim}% %{clan-claim::%chunk at player%}%"
+				stop
+			player cannot build at block under player:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters northwest:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters north:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters northeast:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters west:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters east:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters southwest:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters south:
+				send "%{clanmsg.noclaim}%"
+				stop
+			player cannot build at block 16 meters southeast:
+				send "%{clanmsg.noclaim}%"
+				stop
+			set {clan-claim::%chunk at player%} to {_clan}
+			add chunk at player to {clan-chunk.%{_clan}%::*}
+			send "%{clanmsg.claim}% %chunk at player%"
+
+		if arg 1 is "unclaim":
+			if player doesn't have permission "%{clanconf.perm}%.use.unclaim":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			if {clan-claim::%chunk at player%} is not set:
+				send "%{clanmsg.nounclaim}%"
+				stop
+			loop {clan-chunk.%{_clan}%::*}:
+				if loop-value is chunk at player:
+					remove chunk at player from {clan-chunk.%{_clan}%::*}
+					delete {clan-claim::%chunk at player%}
+					send "%{clanmsg.unclaim}% %chunk at player%"
+					stop
+			send "%{clanmsg.nounclaim}%"
+			stop
+
+		if arg 1 is "sethome" or "ustawbaze":
+			if player doesn't have permission "%{clanconf.perm}%.use.sethome":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			if {clan-claim::%chunk at player%} is not set:
+				send "%{clanmsg.nohome}%"
+				stop
+			loop {clan-chunk.%{_clan}%::*}:
+				if loop-value is chunk at player: 
+					set {clan-home.%{clan.%name of player%}%} to location of player
+					send "%{clanmsg.sethome}%"
+					stop
+			send "%{clanmsg.nohome}%"
+			stop
+
+		if arg 1 is "home" or "baza":
+			if player doesn't have permission "%{clanconf.perm}%.use.home":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if {clan-home.%{clan.%name of player%}%} is not set:
+				send "%{clanmsg.nosethome}%"
+				stop
+			if {clanconf.oczekiwanie} is true:
+				if player doesn't have permission "%{clanconf.perm}%.nieczekaj":
+					send "%{clanmsg.delay}% %{clanconf.czasoczekiwania}% %{clanmsg.nomove}%"
+					set {_posx.%name of player%} to x-location of player
+					set {_posy.%name of player%} to y-location of player
+					set {_posz.%name of player%} to z-location of player
+					loop {clanconf.czasoczekiwania} times:
+						if difference between x-location of player and {_posx.%name of player%} is bigger than 0.5:
+							send "%{clanmsg.tpdeny}%"
+							stop
+						if difference between y-location of player and {_posy.%name of player%} is bigger than 0.5:
+							send "%{clanmsg.tpdeny}%"
+							stop
+						if difference between z-location of player and {_posz.%name of player%} is bigger than 0.5:
+							send "%{clanmsg.tpdeny}%"
+							stop
+						wait 1 second
+					teleport player to {clan-home.%{clan.%name of player%}%}
+					send "%{clanmsg.hometp}%"
+					stop
+				teleport player to {clan-home.%{clan.%name of player%}%}
+				send "%{clanmsg.hometp}%"
+				stop
+			teleport player to {clan-home.%{clan.%name of player%}%}
+			send "%{clanmsg.hometp}%"
+			stop
+
+		if arg 1 is "chunk" or "zajete":
+			if player doesn't have permission "%{clanconf.perm}%.use.chunk":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if size of {clan-chunk.%{clan.%name of player%}%::*} is smaller than 1:
+				send "%{clanmsg.chunkempty}%"
+				stop
+			loop {clan-chunk.%{clan.%name of player%}%::*}:
+				set {_chunk.clan} to "%loop-value%"
+				replace all "chunk " with "" in {_chunk.clan}
+				replace all " of world" with "" in {_chunk.clan}
+				replace all "(" with "%{random.color::%random integer between 0 and 8%}%(" in {_chunk.clan}
+				add {_chunk.clan} to {_calimed::*}
+			send "%{clanmsg.claimed}%"
+			send "%{_calimed::*}%"
+			stop
+
+		if arg 1 is "mapa" or "m" or "map":
+			if player doesn't have permission "%{clanconf.perm}%.use.map":
+				send "%{clanmsg.noperm}%"
+				stop
+			set {_chunk} to "%chunk at player%"
+			replace all "chunk " with "" in {_chunk}
+			replace all " of world" with "" in {_chunk}
+			if {clan-claim::%chunk at player%} is not set:
+				send "&3[&b---&3[%{clanmsg.freeland}%&3]&b &f%{_chunk}% &b---&3] &6%facing of the player%"
+			if {clan-claim::%chunk at player%} is set:
+				send "&3[&b---&3[&e%{clan-claim::%chunk at player%}%&3]&b &f%{_chunk}% &b---&3] &6%facing of the player%"
+			loop 3 times:
+				send "%{kierunek::%facing of the player%.%loop-number%}%"
+			set {_mapX} to 19
+			set {_mapY} to 3
+			set {_m} to ""
+			loop 7 times:
+				loop 39 times:
+					set {_x} to {_mapX} * 16
+					set {_y} to {_mapY} * 16
+					set {_chunk} to chunk at block {_y} blocks north {_x} blocks west of player
+					if {clan-claim::%{_chunk}%} is set:
+						if {_chunk} is not chunk at player:
+							if {clan-claim::%{_chunk}%} is {clan.%name of player%}:
+								set {_m} to "%{_m}%&c/"
+							else:
+								set {_m} to "%{_m}%&5/"
+					if {clan-claim::%{_chunk}%} is not set:
+						if {_chunk} is not chunk at player:
+							set {_m} to "%{_m}%&7-"
+					if {_chunk} is chunk at player:
+						set {_m} to "%{_m}%&6+"
+					subtract 1 from {_mapX}
+				send "%{_m}%"
+				set {_m} to ""
+				subtract 1 from {_mapY}
+				set {_mapX} to 19
+			
+command /aclan [<text>] [<text>] [<text>]:
+	executable by: players and console 
+	description: Clan by Yooka
+	aliases: ac
+	trigger:
+		if arg 1 is "reload" or "r":
+			if executor is player:
+				if player doesn't have permission "%{clanconf.perm}%.admin.relaod":
+					send "%{clanmsg.noperm}%"
+					stop
+				execute player command "sk reload %script%"
+				send "%{clanmsg.reload}%"
+				stop
+			if executor is console:
+				execute console command "sk reload %script%"
+				send "%{clanmsg.reload}%" to console
+				stop
+		if arg 1 is "admin" or "a":
+			if executor is console:
+				send "&cTa komenda moze byc uzyta tylko przez gracza" to console
+				stop
+			if player doesn't have permission "%{clanconf.perm}%.admin.bypass":
+				send "%{clanmsg.noperm}%"
+				stop	
+			if {clan-bypass.%name of player%} is not set:
+				set {clan-bypass.%name of player%} to false
+			if {clan-bypass.%name of player%} is false:
+				set {clan-bypass.%name of player%} to true
+				send "&2Wlaczono dostep do zajetych terenow"
+				stop
+			if {clan-bypass.%name of player%} is true:
+				set {clan-bypass.%name of player%} to false
+				send "&cWylaczono dostep do zajetych terenow"
+				stop
+		if arg 1 is "rank":
+			if player doesn't have permission "%{clanconf.perm}%.admin.rank":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				send "Podaj nazwe gracza"
+				stop
+			if arg 3 is not set:
+				send "Podaj nazwe rangi"
+				stop
+
+			set {clan-ranga.%arg 2%} to arg 3
+			send "Ustawiles range dla %arg 2% na %arg 3%"
+			stop
+		if arg 1 is "usun":
+			if executor is console:
+				if arg 2 is not set:
+					send "Podaj nazwe Klanu" to console
+					stop
+				set {_clan} to arg 2
+				loop {clans::*}:
+					if loop-value is {_clan}:
+						loop {clan-member.%{_clan}%::*}:
+							delete {clan.%loop-value-2%}
+							set {clan-ranga.%loop-value-2%} to "brak"
+						remove {_clan} from {clans::*}
+						delete {clan-member.%{_clan}%::*}
+						loop {clan-chunk.%{_clan}%::*}:
+							delete {clan-claim::%loop-value-2%}
+						wait 2 tick
+						delete {clan-chunk.%{_clan}%::*}
+						delete {clan-opis::%{_clan}%}
+						delete {clan-tag::%{_clan}%}
+						send "&cUsuneles Klan - &6%{_clan}%" to console
+						stop
+				send "&cNie zanleziono Klanu o tej nazwie" to console
+				stop
+			if player doesn't have permission "%{clanconf.perm}%.admin.usun":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				send "Podaj nazwe Klanu"
+				stop
+			set {_clan} to arg 2
+			loop {clans::*}:
+				if loop-value is {_clan}:
+					loop {clan-member.%{_clan}%::*}:
+						delete {clan.%loop-value-2%}
+						set {clan-ranga.%loop-value-2%} to "brak"
+					remove {_clan} from {clans::*}
+					delete {clan-member.%{_clan}%::*}
+					loop {clan-chunk.%{_clan}%::*}:
+						delete {clan-claim::%loop-value-2%}
+					wait 2 tick
+					delete {clan-chunk.%{_clan}%::*}
+					delete {clan-opis::%{_clan}%}
+					delete {clan-tag::%{_clan}%}
+					send "&cUsuneles Klan - &6%{_clan}%"
+					stop
+			send "&cNie zanleziono Klanu o tej nazwie"
+			stop
+		if arg 1 is "tag":
+			if player doesn't have permission "%{clanconf.perm}%.admin.tag":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				send "Podaj nazwe Klanu"
+				stop
+			set {_clan} to arg 2
+			if arg 3 is not set:
+				loop {clans::*}:
+					if loop-value is {_clan}:
+						delete {clan-tag::%{_clan}%}
+						send "Usuneles tag Klanu %{_clan}%"
+						stop
+				send "&cNie zanleziono Klanu o tej nazwie"
+				stop
+			if arg 3 is set:
+				loop {clans::*}:
+					if loop-value is {_clan}:
+						set {clan-tag::%{_clan}%} to coloured arg 3
+						send "Zmieniles tag Klanu %{_clan}% na %coloured arg 3%"
+						stop
+				send "&cNie zanleziono Klanu o tej nazwie"
+				stop
+		if arg 1 is "opis":
+			if player doesn't have permission "%{clanconf.perm}%.admin.opis":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				send "Podaj nazwe Klanu"
+				stop
+			set {_clan} to arg 2
+			if arg 3 is not set:
+				loop {clans::*}:
+					if loop-value is {_clan}:
+						delete {clan-opis::%{_clan}%}
+						send "Usuneles opis Klanu %{_clan}%"
+						stop
+				send "&cNie zanleziono Klanu o tej nazwie"
+				stop
+			if arg 3 is set:
+				loop {clans::*}:
+					if loop-value is {_clan}:
+						set {clan-opis::%{_clan}%} to coloured arg 3
+						send "Zmieniles opis Klanu %{_clan}% na %coloured arg 3%"
+						stop
+				send "&cNie zanleziono Klanu o tej nazwie"
+				stop
+		if arg 1 is "chunk":
+			if player doesn't have permission "%{clanconf.perm}%.admin.chunk":
+				send "%{clanmsg.noperm}%"
+				stop
+			loop {clan-claim::*}:
+				send "%loop-index% %loop-value%"
+
+every 20 ticks:
+	loop all players:
+		if {clan-claim::%chunk at loop-player%} is set:
+			set {_klan} to {clan-claim::%chunk at loop-player%}
+		if {clan-claim::%chunk at loop-player%} is not set:
+			set {_klan} to "brak"
+		if {_klan} is not {ostatni.%loop-player%}:
+			if {_klan} is "brak":
+				send "%{clanmsg.freeland}%" to loop-player
+			else:
+				set {_clan} to {clan-claim::%chunk at loop-player%}
+				send "%{_clan}%" to loop-player
+				if {clan-opis::%{_clan}%} is set:
+					send "%{clan-opis::%{_clan}%}%" to loop-player
+		set {ostatni.%loop-player%} to {_klan}
+
+
+on place:
+	if player's world is not {clanconf.worldclaim}:
+		stop
+	if {clan-bypass.%name of player%} is true:
+		stop
+	if {clan-claim::%chunk at event-block%} is not set:
+		stop
+	if {clan-claim::%chunk at event-block%} is {clan.%name of player%}:
+		stop
+	else:
+		if {clanconf.msgnoplace} is true:
+			send "%{clanmsg.noplace}%"
+		cancel event
+
+on break:
+	if player's world is not {clanconf.worldclaim}:
+		stop
+	if {clan-bypass.%name of player%} is true:
+		stop
+	if {clan-claim::%chunk at event-block%} is not set:
+		stop
+	if {clan-claim::%chunk at event-block%} is {clan.%name of player%}:
+		stop
+	else:
+		if {clanconf.msgnobreak} is true:
+			send "%{clanmsg.nobreak}%"
+		cancel event
+
+on rightclick:
+	if event-block is chest:
+		{clanconf.protchest} is true
+		if player's world is not {clanconf.worldclaim}:
+			stop
+		if {clan-bypass.%name of player%} is true:
+			stop
+		if {clan-claim::%chunk at event-block%} is not set:
+			stop
+		if {clan-claim::%chunk at event-block%} is {clan.%name of player%}:
+			stop
+		else:
+			cancel event
+	if event-block is ender chest:
+		{clanconf.protender} is true
+		if player's world is not {clanconf.worldclaim}:
+			stop
+		if {clan-bypass.%name of player%} is true:
+			stop
+		if {clan-claim::%chunk at event-block%} is not set:
+			stop
+		if {clan-claim::%chunk at event-block%} is {clan.%name of player%}:
+			stop
+		else:
+			cancel event
+	if event-block is other:
+		{clanconf.protother} is true
+		if player's world is not {clanconf.worldclaim}:
+			stop
+		if {clan-bypass.%name of player%} is true:
+			stop
+		if {clan-claim::%chunk at event-block%} is not set:
+			stop
+		if {clan-claim::%chunk at event-block%} is {clan.%name of player%}:
+			stop
+		else:
+			cancel event
+
+on ignition:
+	{clanconf.ignition} is true
+	if event-world is not {clanconf.worldclaim}:
+		stop
+	if {clan-claim::%chunk at event-block%} is not set:
+		stop
+	if {clan-claim::%chunk at event-location%} is {clan.%name of player%}:
+		stop
+	else:
+		cancel event
+
+on explosion:
+	{clanconf.creeper} is true
+	entity is creeper
+	if event-world is not {clanconf.worldclaim}:
+		stop
+	if {clan-claim::%chunk at event-location%} is set:
+		cancel event
+
+on chat:
+	if {clan.%name of player%} is not set:
+		if {clan-prefix.%name of player%} is set:
+			delete {clan-prefix.%name of player%}
+			set the player's prefix to ""
+		stop
+	if {clan-prefix.%name of player%} is not set:
+		if {clan-tag::%{clan.%name of player%}%} is not set:
+			set {clan-prefix.%name of player%} to coloured "[%{clan.%name of player%}%]"
+			set the player's prefix to "%{clan-prefix.%name of player%}%"
+			stop
+		set {clan-prefix.%name of player%} to {clan-tag::%{clan.%name of player%}%}
+		set the player's prefix to "%{clan-prefix.%name of player%}%"
+		stop
+	if {clan-prefix.%name of player%} is not {clan-tag::%{clan.%name of player%}%}:
+		set {clan-prefix.%name of player%} to {clan-tag::%{clan.%name of player%}%}
+		set the player's prefix to "%{clan-prefix.%name of player%}%"
+		stop
