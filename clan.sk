@@ -38,9 +38,13 @@ on load:
 	set {clanconf.tagsize} to value "clan.tagsize" pulled from "%script%" parsed as number
 	set {clanconf.ignition} to value "clan.ignition" pulled from "%script%" parsed as boolean
 	set {clanconf.creeper} to value "clan.creeper" pulled from "%script%" parsed as boolean
+	set {clanconf.claimitem} to value "clan.claimitem" pulled from "%script%" parsed as boolean
+	set {clanconf.claimmoney} to value "clan.claimmoney" pulled from "%script%" parsed as boolean
+	set {pay.claimmoney} to value "payclaimmony" pulled from "%script%" parsed as number
 	loop 20 times:
 		set {pay.create::%loop-number%} to value "paycreate.item-%loop-number%" pulled from "%script%" parsed as item type
-
+	loop 9 times:
+		set {pay.claimitem::%loop-number%} to value "payclaimitem.citem-%loop-number%" pulled from "%script%" parsed as item type
 #Rangi#
 	set {clanconf.zalorzyciel} to value "rangi.zalorzyciel" pulled from "%script%"
 	set {clanconf.officer} to value "rangi.officer" pulled from "%script%"
@@ -108,6 +112,7 @@ on load:
 	set {clanmsg.nofoundclan} to coloured value "msg.nofoundclan" pulled from "%script%"
 	set {clanmsg.regionset} to coloured value "msg.regionset" pulled from "%script%"
 	set {clanmsg.chunkempty} to coloured value "msg.chunkempty" pulled from "%script%"
+	set {clanmsg.nomoney} to coloured value "msg.nomoney" pulled from "%script%"
 
 	loop 20 times:
 		set {clanreg::%loop-number%} to coloured value "reg.no-%loop-number%" pulled from "%script%"
@@ -183,7 +188,7 @@ command /clan [<text>] [<text>]:
 				send "%{clanmsg.noperm}%"
 				stop
 			
-
+			send "&3/clan pomoc"
 			stop
 		if arg 1 is "create" or "utworz" or "stworz":
 			if player doesn't have permission "%{clanconf.perm}%.use.create":
@@ -636,6 +641,29 @@ command /clan [<text>] [<text>]:
 			player cannot build at block 16 meters southeast:
 				send "%{clanmsg.noclaim}%"
 				stop
+			if {clanconf.claimitem} is true:
+				if {status.claim.item.%name of player%} is not set:
+					set {status.claim.item.%name of player%} to false
+				if {status.claim.item.%name of player%} is false:
+					loop 9 times:
+						if player doesn't have {pay.claimitem::%loop-number%}:
+							add {pay.claimitem::%loop-number%} to {_claim-required::*}
+					if size of {_claim-required::*} is greater than 0:
+						send "%{clanmsg.norequired}%: &6%{_claim-required::*}%"
+						stop
+					loop 9 times:
+						remove {pay.claimitem::%loop-number%} from player
+					wait 2 tick
+					set {status.claim.item.%name of player%} to true
+			if {clanconf.claimmoney} is true:
+				if {status.claim.money.%name of player%} is not set:
+					set {status.claim.money.%name of player%} to false
+				if {status.claim.money.%name of player%} is false:
+					if player's balance is smaller than {pay.claimmoney}:
+						send "%{clanmsg.nomoney}% %{pay.claimmoney}% $"
+						stop
+					remove {pay.claimmoney} from the player's balance
+					set {status.claim.money.%name of player%} to false
 			set {clan-claim::%chunk at player%} to {_clan}
 			add chunk at player to {clan-chunk.%{_clan}%::*}
 			send "%{clanmsg.claim}% %chunk at player%"
