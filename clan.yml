@@ -24,12 +24,32 @@ clan:
   ignition: true
 #Ochrona przed wybuchem creeper-a... (Nie niszczy zajetego terenu.. bedac na nim)#
   creeper: true
+#Typ oplaty za claim#
+#Pobieranie przedmiotow za claim #
+  claimitem: true
+#Pobieranie kasy za claim#
+  claimmoney: true
 
 rangi:
   zalorzyciel: Lider
   officer: Oficer
   member: Member
   recruit: Rekrut
+
+#Kasa za claim#
+payclaimmony: 500
+
+#Przedmioty za claim #
+payclaimitem:
+  citem-1: 64 stone
+  citem-2: 64 stone
+  citem-3: 64 stone
+  citem-4: 64 dirt
+  citem-5:
+  citem-6:
+  citem-7:
+  citem-8:
+  citem-9:
 
 paycreate:
   item-1: 64 diamond
@@ -54,7 +74,7 @@ paycreate:
   item-20:
 
 info:
-  wersja: 0.2
+  wersja: 0.21
 
 msg:
   noperm: <red>Brak Uprawnien
@@ -117,6 +137,7 @@ msg:
   nofoundclan: <red>Nie znaleziono Klanu o tej nazwie
   regionset: <red>Wykryto region. Nie mozesz go zajac
   chunkempty: <red>Nie zajeto zadnego terenu
+  nomoney: <red>Nie mozesz zabespieczyc. Koszt claim to<gold>
 
 reg:
   no-1: <red>Zakaz tworzenia nazw kalnu z dziwnymi symbolami - <gold>Usuniecie Kalnu
