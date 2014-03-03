@@ -18,6 +18,8 @@
 # {clan-inv.%{clan.%name of player%}%::*} - Lista zaproszonych do klanu #
 # {clan-opis::%{clan.%name of player%}%} - Opis  #
 # {clan-tag::%{clan.%name of player%}%} - Tag  #
+# {clan-enemy.%{clan.%name of player%}%::*} - Wrog #
+# {clan-ally.%{clan.%name of player%}%::*} - Sojusznik #
 
 aliases:
 	other = 23, 61
@@ -40,9 +42,12 @@ on load:
 	set {clanconf.creeper} to value "clan.creeper" pulled from "%script%" parsed as boolean
 	set {clanconf.claimitem} to value "clan.claimitem" pulled from "%script%" parsed as boolean
 	set {clanconf.claimmoney} to value "clan.claimmoney" pulled from "%script%" parsed as boolean
+	set {clanconf.claim} to value "clan.claim" pulled from "%script%" parsed as boolean
 	set {pay.claimmoney} to value "payclaimmony" pulled from "%script%" parsed as number
+	clear {pay.create::*}
 	loop 20 times:
 		set {pay.create::%loop-number%} to value "paycreate.item-%loop-number%" pulled from "%script%" parsed as item type
+	clear {pay.claimitem::*}
 	loop 9 times:
 		set {pay.claimitem::%loop-number%} to value "payclaimitem.citem-%loop-number%" pulled from "%script%" parsed as item type
 #Rangi#
@@ -113,7 +118,9 @@ on load:
 	set {clanmsg.regionset} to coloured value "msg.regionset" pulled from "%script%"
 	set {clanmsg.chunkempty} to coloured value "msg.chunkempty" pulled from "%script%"
 	set {clanmsg.nomoney} to coloured value "msg.nomoney" pulled from "%script%"
-
+	set {clanmsg.offclaim} to coloured value "msg.offclaim" pulled from "%script%"
+	clear {clanhelp::*}
+	clear {clanreg::*}
 	loop 20 times:
 		set {clanreg::%loop-number%} to coloured value "reg.no-%loop-number%" pulled from "%script%"
 		set {clanhelp::%loop-number%} to coloured value "help.co-%loop-number%" pulled from "%script%"
@@ -178,7 +185,7 @@ on load:
 	set {badsymbol::29} to "chuj"
 	set {badsymbol::30} to "dziwka"
 
-command /clan [<text>] [<text>]:
+command /clan [<text>] [<text>] [<text>]:
 	executable by: players
 	description: Clan by Yooka
 	aliases: c
@@ -280,6 +287,101 @@ command /clan [<text>] [<text>]:
 			send "%{clanmsg.inviteplayer}% %{clan.%name of player%}%" to arg 2 parsed as player
 			stop
 
+		if arg 1 is "enemy" or "wrog":
+			if player doesn't have permission "%{clanconf.perm}%.use.enemy":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.clannoname}%"
+				stop
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			set {_enemy} to arg 2
+			if {_enemy} is {_clan}:
+				send "Nie mozesz miec wojny ze swoim Klanem"
+				stop
+			loop {clan-enemy.%{_clan}%::*}:
+				if loop-value is {_enemy}:
+					send "Masz juz wojne z tym klanem"
+					stop
+			loop {clans::*}:
+				if loop-value-1 is {_enemy}:
+					add {_enemy} to {clan-enemy.%{_clan}%::*}
+					add {_clan} to {clan-enemy.%{_enemy}%::*}		
+
+					loop {clan-ally.%{_clan}%::*}:
+						if loop-value-2 is {_enemy}:
+							remove {_enemy} from {clan-ally.%{_clan}%::*}
+
+					loop {clan-ally.%{_enemy}%::*}:
+						if loop-value-2 is {_clan}:
+							remove {_clan} from {clan-ally.%{_enemy}%::*}
+
+					send "Od teraz jestescie wrogami"
+					loop {clan-member.%{_enemy}%::*}:
+						if loop-value-2 parsed as player is online:
+							send "Klan %{_clan}% jest teraz twoim wrogiem" to loop-value-2 parsed as player
+					stop
+			send "%{clanmsg.nofoundclan}%"
+			stop
+		if arg 1 is "ally" or "sojusz":
+			if player doesn't have permission "%{clanconf.perm}%.use.enemy":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			if arg 2 is not set:
+				send "%{clanmsg.clannoname}%"
+				stop
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			set {_ally} to arg 2
+			if arg 3 is "akceptuj":
+				loop {clan-ally.wait.%{_clan}%::*}:
+					if loop-value-1 is {_ally}:
+						add {_ally} to {clan-ally.%{_clan}%::*}
+						add {_clan} to {clan-ally.%{_ally}%::*}
+						remove {_ally} from {clan-ally.wait.%{_clan}%::*}
+						remove {_clan} from {clan-ally.wait.%{_ally}%::*}
+						remove {_ally} from {clan-enemy.%{_clan}%::*}
+						remove {_clan} from {clan-enemy.%{_ally}%::*}
+						send "Zakceptowales sojusz %{_ally}%"
+						loop {clan-member.%{_ally}%::*}:
+							if loop-value-2 parsed as player is online:
+								if {clan-ranga.%loop-value-2%} is {clanconf.zalorzyciel}:
+									send "%{_clan}% zaakceptowal sojusz" to loop-value-2 parsed as player
+						stop
+				send "%{clanmsg.nofoundclan}%"
+				stop
+			if {_ally} is {_clan}:
+				send "Nie mozesz miec sojuszu ze swoim Klanem"
+				stop
+			loop {clan-ally.%{_clan}%::*}:
+				if loop-value is {_ally}:
+					send "Masz juz sojusz z tym Klanem"
+					stop
+			loop {clans::*}:
+				if loop-value-1 is {_ally}:
+					add {_ally} to {clan-ally.wait.%{_clan}%::*}
+					add {_clan} to {clan-ally.wait.%{_ally}%::*}
+					loop {clan-member.%{_ally}%::*}:
+						if loop-value-2 parsed as player is online:
+							if {clan-ranga.%loop-value-2%} is {clanconf.zalorzyciel}:
+								send "Klan %{_clan}% zaprosil cie do sojuszu" to loop-value-2 parsed as player
+								send "Aby zaakceptowac wpisz /clan sojusz %{_clan}% akceptuj" to loop-value-2 parsed as player
+					send "Zaprosiles Klan %{_ally}% do sojuszu"
+					stop
+
+			send "%{clanmsg.nofoundclan}%"
+			stop
 		if arg 1 is "tag":
 			if player doesn't have permission "%{clanconf.perm}%.use.tag":
 				send "%{clanmsg.noperm}%"
@@ -293,6 +395,10 @@ command /clan [<text>] [<text>]:
 			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
 				send "%{clanmsg.nolider}%"
 				stop
+			loop {badsymbol::*}:
+				if arg 2 contains "%loop-value%":
+					send "%{clanmsg.nosymbol}%"
+					stop
 			if length of the string arg 2 is bigger than {clanconf.tagsize}:
 				send "%{clanmsg.badsizetag}%"
 				stop
@@ -303,7 +409,7 @@ command /clan [<text>] [<text>]:
 				if arg 2 contains "%loop-value%":
 					send "%{clanmsg.occupiedtag}%"
 					stop
-			set {clan-tag::%{clan.%name of player%}%} to coloured arg 2
+			set {clan-tag::%{clan.%name of player%}%} to arg 2
 			send "%{clanmsg.tagset}% %{clan-tag::%{clan.%name of player%}%}%"
 			stop
 
@@ -321,12 +427,13 @@ command /clan [<text>] [<text>]:
 				send "%{clanmsg.noopis}%"
 				stop
 			set {_opis} to arg 2
+			set {_opis2} to arg 3
 			loop {badsymbol::*}:
 				if {_opis} contains "%loop-value%":
 					send "%{clanmsg.badopis}%"
 					stop
-			set {clan-opis::%{clan.%name of player%}%} to {_opis}
-			send "%{clanmsg.setopis}% %{_opis}%"
+			set {clan-opis::%{clan.%name of player%}%} to "%{_opis}% %{_opis2}%"
+			send "%{clanmsg.setopis}% %{_opis}% %{_opis2}%"
 			stop
 
 		if arg 1 is "zaproszeni":
@@ -441,6 +548,12 @@ command /clan [<text>] [<text>]:
 						add loop-value to {_clan.online::*}
 				send "Online: %{_clan.online::*}%"
 				send "Czlonkowie: %{clan-member.%{clan.%name of player%}%::*}%"
+				if size of {clan-enemy.%{clan.%name of player%}%::*} is greater than 0:
+					send "&cWrogowie: %{clan-enemy.%{clan.%name of player%}%::*}%"
+				if size of {clan-ally.%{clan.%name of player%}%::*} is greater than 0:
+					send "&3Sojusznicy: %{clan-ally.%{clan.%name of player%}%::*}%"
+				stop
+
 			if arg 2 is set:
 				if {clan-member.%arg 2%::*} is not set:
 					send "%{clanmsg.nofoundclan}%"
@@ -462,7 +575,11 @@ command /clan [<text>] [<text>]:
 						add loop-value to {_clan.online::*}
 				send "Online: %{_clan.online::*}%"
 				send "Czlonkowie: %{clan-member.%{_clan}%::*}%"
-
+				if size of {clan-enemy.%{_clan}%::*} is greater than 0:
+					send "&cWrogowie: %{clan-enemy.%{_clan}%::*}%"
+				if size of {clan-ally.%{_clan}%::*} is greater than 0:
+					send "&3Sojusznicy: %{clan-ally.%{_clan}%::*}%"
+				stop
 
 
 		if arg 1 is "lista" or "list":
@@ -593,6 +710,9 @@ command /clan [<text>] [<text>]:
 				if {_lista} is equal to 10:
 					stop	
 		if arg 1 is "claim":
+			if {clanconf.claim} is false:
+				send "%{clanmsg.offclaim}%"
+				stop
 			if player doesn't have permission "%{clanconf.perm}%.use.claim":
 				send "%{clanmsg.noperm}%"
 				stop
@@ -663,12 +783,17 @@ command /clan [<text>] [<text>]:
 						send "%{clanmsg.nomoney}% %{pay.claimmoney}% $"
 						stop
 					remove {pay.claimmoney} from the player's balance
-					set {status.claim.money.%name of player%} to false
+					set {status.claim.money.%name of player%} to true
 			set {clan-claim::%chunk at player%} to {_clan}
 			add chunk at player to {clan-chunk.%{_clan}%::*}
 			send "%{clanmsg.claim}% %chunk at player%"
+			set {status.claim.money.%name of player%} to false
+			set {status.claim.item.%name of player%} to false
 
 		if arg 1 is "unclaim":
+			if {clanconf.claim} is false:
+				send "%{clanmsg.offclaim}%"
+				stop
 			if player doesn't have permission "%{clanconf.perm}%.use.unclaim":
 				send "%{clanmsg.noperm}%"
 				stop
@@ -689,6 +814,9 @@ command /clan [<text>] [<text>]:
 			stop
 
 		if arg 1 is "sethome" or "ustawbaze":
+			if {clanconf.claim} is false:
+				send "%{clanmsg.offclaim}%"
+				stop
 			if player doesn't have permission "%{clanconf.perm}%.use.sethome":
 				send "%{clanmsg.noperm}%"
 				stop
@@ -711,6 +839,9 @@ command /clan [<text>] [<text>]:
 			stop
 
 		if arg 1 is "home" or "baza":
+			if {clanconf.claim} is false:
+				send "%{clanmsg.offclaim}%"
+				stop
 			if player doesn't have permission "%{clanconf.perm}%.use.home":
 				send "%{clanmsg.noperm}%"
 				stop
@@ -748,6 +879,9 @@ command /clan [<text>] [<text>]:
 			stop
 
 		if arg 1 is "chunk" or "zajete":
+			if {clanconf.claim} is false:
+				send "%{clanmsg.offclaim}%"
+				stop
 			if player doesn't have permission "%{clanconf.perm}%.use.chunk":
 				send "%{clanmsg.noperm}%"
 				stop
@@ -768,6 +902,9 @@ command /clan [<text>] [<text>]:
 			stop
 
 		if arg 1 is "mapa" or "m" or "map":
+			if {clanconf.claim} is false:
+				send "%{clanmsg.offclaim}%"
+				stop
 			if player doesn't have permission "%{clanconf.perm}%.use.map":
 				send "%{clanmsg.noperm}%"
 				stop
@@ -956,6 +1093,8 @@ command /aclan [<text>] [<text>] [<text>]:
 				send "%loop-index% %loop-value%"
 
 every 20 ticks:
+	if {clanconf.claim} is false:
+		stop
 	loop all players:
 		if {clan-claim::%chunk at loop-player%} is set:
 			set {_klan} to {clan-claim::%chunk at loop-player%}
@@ -973,6 +1112,8 @@ every 20 ticks:
 
 
 on place:
+	if {clanconf.claim} is false:
+		stop
 	if player's world is not {clanconf.worldclaim}:
 		stop
 	if {clan-bypass.%name of player%} is true:
@@ -987,6 +1128,8 @@ on place:
 		cancel event
 
 on break:
+	if {clanconf.claim} is false:
+		stop
 	if player's world is not {clanconf.worldclaim}:
 		stop
 	if {clan-bypass.%name of player%} is true:
@@ -1001,6 +1144,8 @@ on break:
 		cancel event
 
 on rightclick:
+	if {clanconf.claim} is false:
+		stop
 	if event-block is chest:
 		{clanconf.protchest} is true
 		if player's world is not {clanconf.worldclaim}:
@@ -1039,6 +1184,8 @@ on rightclick:
 			cancel event
 
 on ignition:
+	if {clanconf.claim} is false:
+		stop
 	{clanconf.ignition} is true
 	if event-world is not {clanconf.worldclaim}:
 		stop
@@ -1050,6 +1197,8 @@ on ignition:
 		cancel event
 
 on explosion:
+	if {clanconf.claim} is false:
+		stop
 	{clanconf.creeper} is true
 	entity is creeper
 	if event-world is not {clanconf.worldclaim}:

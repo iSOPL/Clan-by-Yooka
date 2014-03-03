@@ -3,6 +3,8 @@ clan:
   itempay: true
   maxcalim: 20
   maxmember: 10
+#Aby wylaczyc zajmowanie terenu false #
+  claim: true
 #Nazwa swiata na ktorym gracz moze zrobic claim - tylko 1 swiat#
   worldclaim: world
 #Czy oczekiwanie na teleport ma byc wlaczone#
@@ -41,10 +43,10 @@ payclaimmony: 500
 
 #Przedmioty za claim #
 payclaimitem:
-  citem-1: 64 stone
-  citem-2: 64 stone
-  citem-3: 64 stone
-  citem-4: 64 dirt
+  citem-1: 567 stone
+  citem-2: 64 dirt
+  citem-3: 
+  citem-4:
   citem-5:
   citem-6:
   citem-7:
@@ -81,7 +83,7 @@ msg:
   clanset: <red>Jestes juz w klanie
   clanexist: <red>Klan o tej nazwie juz istnieje
   clannoname: <red>Podaj nazwe Klanu
-  nosymbol: <red>Nazwa kalnu zawiera niedozwolony zank
+  nosymbol: <red>Nazwa zawiera niedozwolony zank
   clancreate: <dark green>Utworzyles klan<gold>
   norequired: <red><bold>Nie masz wszystkich przedmiotow! Brakuje
   reload: <red>Przeladowano
@@ -138,6 +140,7 @@ msg:
   regionset: <red>Wykryto region. Nie mozesz go zajac
   chunkempty: <red>Nie zajeto zadnego terenu
   nomoney: <red>Nie mozesz zabespieczyc. Koszt claim to<gold>
+  offclaim: <red>Zajmowanie terenu jest wylaczone
 
 reg:
   no-1: <red>Zakaz tworzenia nazw kalnu z dziwnymi symbolami - <gold>Usuniecie Kalnu
