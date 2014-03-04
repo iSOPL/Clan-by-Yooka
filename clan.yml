@@ -4,7 +4,7 @@ clan:
   maxcalim: 20
   maxmember: 10
 #Aby wylaczyc zajmowanie terenu false #
-  claim: true
+  stclaim: true
 #Nazwa swiata na ktorym gracz moze zrobic claim - tylko 1 swiat#
   worldclaim: world
 #Czy oczekiwanie na teleport ma byc wlaczone#
@@ -28,9 +28,9 @@ clan:
   creeper: true
 #Typ oplaty za claim#
 #Pobieranie przedmiotow za claim #
-  claimitem: true
+  claimitem: false
 #Pobieranie kasy za claim#
-  claimmoney: true
+  claimmoney: false
 
 rangi:
   zalorzyciel: Lider
@@ -141,6 +141,7 @@ msg:
   chunkempty: <red>Nie zajeto zadnego terenu
   nomoney: <red>Nie mozesz zabespieczyc. Koszt claim to<gold>
   offclaim: <red>Zajmowanie terenu jest wylaczone
+  unclaimall: <red>Odbespieczon wszystkie Claimy
 
 reg:
   no-1: <red>Zakaz tworzenia nazw kalnu z dziwnymi symbolami - <gold>Usuniecie Kalnu
@@ -176,7 +177,7 @@ help:
   co-9: <dark aqua>/clan lista <white>- lista klanow
   co-10: <dark aqua>/clan claim <white>- zajowanie terenu
   co-11: <dark aqua>/clan unclaim <white>- odbespiecznie terenu
-  co-12: <dark aqua>/clan sethome <white>- ustawianie bazy
+  co-12: <dark aqua>/clan unclaimall <white>- odbespiecza wszystko
   co-13: <dark aqua>/clan home <white>- tp do bazy
   co-14: <dark aqua>/clan chunk <white>- lista zajetych chunkow
   co-15: <dark aqua>/clan mapa <white>- mapa zajetych chunko
@@ -185,3 +186,7 @@ help:
   co-18: <dark aqua>/clan opis <white>- opis klanu
   co-19: <dark aqua>/clan tag <white>- tag klanu
   co-20: <dark aqua>/clan przedmioty <white>- Lista wymaganych przedmiotow
+  co-21: <dark aqua>/clan sethome <white>- ustawianie bazy
+  co-22: <dark aqua>/clan enemy <white>- ustawia relacje z innym klanem na enemy
+  co-23: <dark aqua>/clan ally <white>- ustawia relacje z innym klanem na ally
+  co-24: <dark aqua>/clan ally <nazwa klanu> akceptuj<white>- akceptacja relacji ally

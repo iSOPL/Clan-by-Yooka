@@ -20,6 +20,8 @@
 # {clan-tag::%{clan.%name of player%}%} - Tag  #
 # {clan-enemy.%{clan.%name of player%}%::*} - Wrog #
 # {clan-ally.%{clan.%name of player%}%::*} - Sojusznik #
+# {clan-datacreate.%{clan.%name of player%}%} - data utworzenia klanu #
+# {clan-home.%{clan.%name of player%}%} - Baza klanu #
 
 aliases:
 	other = 23, 61
@@ -42,7 +44,7 @@ on load:
 	set {clanconf.creeper} to value "clan.creeper" pulled from "%script%" parsed as boolean
 	set {clanconf.claimitem} to value "clan.claimitem" pulled from "%script%" parsed as boolean
 	set {clanconf.claimmoney} to value "clan.claimmoney" pulled from "%script%" parsed as boolean
-	set {clanconf.claim} to value "clan.claim" pulled from "%script%" parsed as boolean
+	set {clanconf.claim} to value "clan.stclaim" pulled from "%script%" parsed as boolean
 	set {pay.claimmoney} to value "payclaimmony" pulled from "%script%" parsed as number
 	clear {pay.create::*}
 	loop 20 times:
@@ -119,10 +121,12 @@ on load:
 	set {clanmsg.chunkempty} to coloured value "msg.chunkempty" pulled from "%script%"
 	set {clanmsg.nomoney} to coloured value "msg.nomoney" pulled from "%script%"
 	set {clanmsg.offclaim} to coloured value "msg.offclaim" pulled from "%script%"
+	set {clanmsg.unclaimall} to coloured value "msg.unclaimall" pulled from "%script%"
 	clear {clanhelp::*}
 	clear {clanreg::*}
 	loop 20 times:
 		set {clanreg::%loop-number%} to coloured value "reg.no-%loop-number%" pulled from "%script%"
+	loop 30 times:	
 		set {clanhelp::%loop-number%} to coloured value "help.co-%loop-number%" pulled from "%script%"
 
 	set {kierunek::south.1} to "&7---&6[N]&7---&7-------------------------------"
@@ -230,6 +234,7 @@ command /clan [<text>] [<text>] [<text>]:
 			add name of player to {clan-member.%{clan.%name of player%}%::*}
 			set {clan-ranga.%name of player%} to {clanconf.zalorzyciel}
 			send "%{clanmsg.clancreate}% %arg 2%"
+			set {clan-datacreate.%arg 2%} to now
 			stop
 
 		if arg 1 is "usun" or "del":
@@ -253,7 +258,15 @@ command /clan [<text>] [<text>] [<text>]:
 			loop {clan-chunk.%{_clan}%::*}:
 				delete {clan-claim::%loop-value%}
 			wait 2 tick
+			loop {clan-enemy.%{_clan}%::*}:
+				remove {_clan} from {clan-enemy.%loop-value%::*}
+			loop {clan-ally.%{_clan}%::*}:
+				remove {_clan} from {clan-ally.%loop-value%::*}
+			wait 2 tick
+			delete {clan-enemy.%{_clan}%::*}
+			delete {clan-ally.%{_clan}%::*}
 			delete {clan-chunk.%{_clan}%::*}
+			delete {clan-home.%{_clan}%}
 			send "%{clanmsg.clandelete}%"
 			stop
 
@@ -534,6 +547,9 @@ command /clan [<text>] [<text>] [<text>]:
 					stop
 
 				send "Gildia: %{clan.%name of player%}%"
+				if {clan-datacreate.%{clan.%name of player%}%} is not set:
+					set {clan-datacreate.%{clan.%name of player%}%} to now
+				send "Data utworzenia: %{clan-datacreate.%{clan.%name of player%}%}%"
 				if {clan-opis::%{clan.%name of player%}%} is set:
 					send "Opis: %{clan-opis::%{clan.%name of player%}%}%"
 				if {clan-tag::%{clan.%name of player%}%} is set:
@@ -546,6 +562,8 @@ command /clan [<text>] [<text>] [<text>]:
 				loop {clan-member.%{clan.%name of player%}%::*}:
 					if loop-value parsed as player is online:
 						add loop-value to {_clan.online::*}
+				if {_clan.online::*} is not set:
+					add "Nikogo nie ma" to {_clan.online::*}
 				send "Online: %{_clan.online::*}%"
 				send "Czlonkowie: %{clan-member.%{clan.%name of player%}%::*}%"
 				if size of {clan-enemy.%{clan.%name of player%}%::*} is greater than 0:
@@ -561,6 +579,9 @@ command /clan [<text>] [<text>] [<text>]:
 				set {_clan} to arg 2
 				clear {_clan.online::*}
 				send "Gildia: %{_clan}%"
+				if {clan-datacreate.%arg 2%} is not set:
+					set {clan-datacreate.%arg 2%} to now
+				send "Data utworzenia: %{clan-datacreate.%arg 2%}%"
 				if {clan-opis::%{_clan}%} is set:
 					send "Opis: %{clan-opis::%{_clan}%}%"
 				if {clan-tag::%{_clan}%} is set:
@@ -573,6 +594,8 @@ command /clan [<text>] [<text>] [<text>]:
 				loop {clan-member.%{_clan}%::*}:
 					if loop-value parsed as player is online:
 						add loop-value to {_clan.online::*}
+				if {_clan.online::*} is not set:
+					add "Nikogo nie ma" to {_clan.online::*}
 				send "Online: %{_clan.online::*}%"
 				send "Czlonkowie: %{clan-member.%{_clan}%::*}%"
 				if size of {clan-enemy.%{_clan}%::*} is greater than 0:
@@ -647,7 +670,7 @@ command /clan [<text>] [<text>] [<text>]:
 				if {_lista} is equal to 10:
 					stop
 
-		if arg 1 is "help" or "h" or "pomoc":
+		if arg 1 is "help" or "h" or "pomoc" or "p":
 			if player doesn't have permission "%{clanconf.perm}%.use.pomoc":
 				send "%{clanmsg.noperm}%"
 				stop
@@ -706,7 +729,7 @@ command /clan [<text>] [<text>] [<text>]:
 				add loop-number to {_lista}
 				if {_pay.create::%{_lista}%} is air:
 					stop
-				send "&6%{_lista}%.%{random.color::%random integer between 0 and 8%}%%{_pay.create::%{_lista}%}%"
+				send "&6%{_lista}%. %{random.color::%random integer between 0 and 8%}%%{_pay.create::%{_lista}%}%"
 				if {_lista} is equal to 10:
 					stop	
 		if arg 1 is "claim":
@@ -813,6 +836,26 @@ command /clan [<text>] [<text>] [<text>]:
 			send "%{clanmsg.nounclaim}%"
 			stop
 
+		if arg 1 is "unclaimall":
+			if player doesn't have permission "%{clanconf.perm}%.use.unclaimall":
+				send "%{clanmsg.noperm}%"
+				stop
+			if {clanconf.claim} is false:
+				send "%{clanmsg.offclaim}%"
+				stop
+			if {clan.%name of player%} is not set:
+				send "%{clanmsg.noclan}%"
+				stop
+			set {_clan} to {clan.%name of player%}
+			if {clan-ranga.%name of player%} is not {clanconf.zalorzyciel}:
+				send "%{clanmsg.nolider}%"
+				stop
+			loop {clan-chunk.%{_clan}%::*}:
+				delete {clan-claim::%loop-value%}
+			delete {clan-chunk.%{_clan}%::*}
+			send "%{clanmsg.unclaimall}%"
+
+
 		if arg 1 is "sethome" or "ustawbaze":
 			if {clanconf.claim} is false:
 				send "%{clanmsg.offclaim}%"
@@ -878,7 +921,7 @@ command /clan [<text>] [<text>] [<text>]:
 			send "%{clanmsg.hometp}%"
 			stop
 
-		if arg 1 is "chunk" or "zajete":
+		if arg 1 is "chunk" or "zajete" or "sc" or "seechunk":
 			if {clanconf.claim} is false:
 				send "%{clanmsg.offclaim}%"
 				stop
@@ -928,7 +971,7 @@ command /clan [<text>] [<text>] [<text>]:
 					if {clan-claim::%{_chunk}%} is set:
 						if {_chunk} is not chunk at player:
 							if {clan-claim::%{_chunk}%} is {clan.%name of player%}:
-								set {_m} to "%{_m}%&c/"
+								set {_m} to "%{_m}%&2/"
 							else:
 								set {_m} to "%{_m}%&5/"
 					if {clan-claim::%{_chunk}%} is not set:
@@ -941,7 +984,7 @@ command /clan [<text>] [<text>] [<text>]:
 				set {_m} to ""
 				subtract 1 from {_mapY}
 				set {_mapX} to 19
-			
+
 command /aclan [<text>] [<text>] [<text>]:
 	executable by: players and console 
 	description: Clan by Yooka
@@ -1009,6 +1052,14 @@ command /aclan [<text>] [<text>] [<text>]:
 						delete {clan-chunk.%{_clan}%::*}
 						delete {clan-opis::%{_clan}%}
 						delete {clan-tag::%{_clan}%}
+						loop {clan-enemy.%{_clan}%::*}:
+							remove {_clan} from {clan-enemy.%loop-value-2%::*}
+						loop {clan-ally.%{_clan}%::*}:
+							remove {_clan} from {clan-ally.%loop-value-2%::*}
+						wait 2 tick
+						delete {clan-enemy.%{_clan}%::*}
+						delete {clan-ally.%{_clan}%::*}
+						delete {clan-home.%{_clan}%}
 						send "&cUsuneles Klan - &6%{_clan}%" to console
 						stop
 				send "&cNie zanleziono Klanu o tej nazwie" to console
@@ -1091,7 +1142,15 @@ command /aclan [<text>] [<text>] [<text>]:
 				stop
 			loop {clan-claim::*}:
 				send "%loop-index% %loop-value%"
-
+		if arg 1 is "sojusz":
+			if player doesn't have permission "%{clanconf.perm}%.admin.sojusz":
+				send "%{clanmsg.noperm}%"
+				stop
+			if arg 2 is not set:
+				send "Podaj nazwe klanu"
+				stop
+			loop {clan-ally.%arg 2%::*}:
+				send "%loop-index% %loop-value%"
 every 20 ticks:
 	if {clanconf.claim} is false:
 		stop
