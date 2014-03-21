@@ -1,6 +1,4 @@
-touch README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin https://github.com/yooka102/gildie.git
-git push -u origin master
+Clan-by-Yooka
+=======
+
+Wymagany dodatke wildskript http://www.dzikoysk.net/wildskript/

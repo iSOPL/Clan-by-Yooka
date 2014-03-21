@@ -26,108 +26,108 @@
 aliases:
 	other = 23, 61
 on load:
-	set {clanconf.perm} to value "clan.perm" pulled from "%script%"
-	set {clanconf.worldeditregion} to value "clan.worldeditregion" pulled from "%script%" parsed as boolean
-	set {clanconf.worldclaim} to value "clan.worldclaim" pulled from "%script%"
-	set {clanconf.itempay} to value "clan.itempay" pulled from "%script%" parsed as boolean
-	set {clanconf.maxcalim} to value "clan.maxcalim" pulled from "%script%" parsed as number
-	set {clanconf.maxmember} to value "clan.maxmember" pulled from "%script%" parsed as number
-	set {clanconf.oczekiwanie} to value "clan.oczekiwanie" pulled from "%script%" parsed as boolean
-	set {clanconf.czasoczekiwania} to value "clan.czasoczekiwania" pulled from "%script%" parsed as number
-	set {clanconf.msgnoplace} to value "clan.msgnoplace" pulled from "%script%" parsed as boolean
-	set {clanconf.msgnobreak} to value "clan.msgnobreak" pulled from "%script%" parsed as boolean
-	set {clanconf.protchest} to value "clan.protchest" pulled from "%script%" parsed as boolean
-	set {clanconf.protender} to value "clan.protender" pulled from "%script%" parsed as boolean
-	set {clanconf.protother} to value "clan.protother" pulled from "%script%" parsed as boolean
-	set {clanconf.tagsize} to value "clan.tagsize" pulled from "%script%" parsed as number
-	set {clanconf.ignition} to value "clan.ignition" pulled from "%script%" parsed as boolean
-	set {clanconf.creeper} to value "clan.creeper" pulled from "%script%" parsed as boolean
-	set {clanconf.claimitem} to value "clan.claimitem" pulled from "%script%" parsed as boolean
-	set {clanconf.claimmoney} to value "clan.claimmoney" pulled from "%script%" parsed as boolean
-	set {clanconf.claim} to value "clan.stclaim" pulled from "%script%" parsed as boolean
-	set {pay.claimmoney} to value "payclaimmony" pulled from "%script%" parsed as number
+	set {clanconf.perm} to value "clan.perm" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanconf.worldeditregion} to value "clan.worldeditregion" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.worldclaim} to value "clan.worldclaim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanconf.itempay} to value "clan.itempay" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.maxcalim} to value "clan.maxcalim" get of "plugins/Skript/scripts/%script%.yml" parsed as number
+	set {clanconf.maxmember} to value "clan.maxmember" get of "plugins/Skript/scripts/%script%.yml" parsed as number
+	set {clanconf.oczekiwanie} to value "clan.oczekiwanie" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.czasoczekiwania} to value "clan.czasoczekiwania" get of "plugins/Skript/scripts/%script%.yml" parsed as number
+	set {clanconf.msgnoplace} to value "clan.msgnoplace" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.msgnobreak} to value "clan.msgnobreak" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.protchest} to value "clan.protchest" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.protender} to value "clan.protender" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.protother} to value "clan.protother" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.tagsize} to value "clan.tagsize" get of "plugins/Skript/scripts/%script%.yml" parsed as number
+	set {clanconf.ignition} to value "clan.ignition" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.creeper} to value "clan.creeper" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.claimitem} to value "clan.claimitem" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.claimmoney} to value "clan.claimmoney" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {clanconf.claim} to value "clan.stclaim" get of "plugins/Skript/scripts/%script%.yml" parsed as boolean
+	set {pay.claimmoney} to value "payclaimmony" get of "plugins/Skript/scripts/%script%.yml" parsed as number
 	clear {pay.create::*}
 	loop 20 times:
-		set {pay.create::%loop-number%} to value "paycreate.item-%loop-number%" pulled from "%script%" parsed as item type
+		set {pay.create::%loop-number%} to value "paycreate.item-%loop-number%" get of "plugins/Skript/scripts/%script%.yml" parsed as item type
 	clear {pay.claimitem::*}
 	loop 9 times:
-		set {pay.claimitem::%loop-number%} to value "payclaimitem.citem-%loop-number%" pulled from "%script%" parsed as item type
+		set {pay.claimitem::%loop-number%} to value "payclaimitem.citem-%loop-number%" get of "plugins/Skript/scripts/%script%.yml" parsed as item type
 #Rangi#
-	set {clanconf.zalorzyciel} to value "rangi.zalorzyciel" pulled from "%script%"
-	set {clanconf.officer} to value "rangi.officer" pulled from "%script%"
-	set {clanconf.member} to value "rangi.member" pulled from "%script%"
-	set {clanconf.recruit} to value "rangi.recruit" pulled from "%script%"
+	set {clanconf.zalorzyciel} to value "rangi.zalorzyciel" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanconf.officer} to value "rangi.officer" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanconf.member} to value "rangi.member" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanconf.recruit} to value "rangi.recruit" get of "plugins/Skript/scripts/%script%.yml"
 
 # Wiadomosci #
-	set {clanmsg.noperm} to coloured value "msg.noperm" pulled from "%script%"
-	set {clanmsg.clanset} to coloured value "msg.clanset" pulled from "%script%"
-	set {clanmsg.clanexist} to coloured value "msg.clanexist" pulled from "%script%"
-	set {clanmsg.clannoname} to coloured value "msg.clannoname" pulled from "%script%"
-	set {clanmsg.nosymbol} to coloured value "msg.nosymbol" pulled from "%script%"
-	set {clanmsg.noclan} to coloured value "msg.noclan" pulled from "%script%"
-	set {clanmsg.noclans} to coloured value "msg.noclans" pulled from "%script%"
-	set {clanmsg.clancreate} to coloured value "msg.clancreate" pulled from "%script%"
-	set {clanmsg.norequired} to coloured value "msg.norequired" pulled from "%script%"
-	set {clanmsg.reload} to coloured value "msg.reload" pulled from "%script%"
-	set {clanmsg.clandelete} to coloured value "msg.clandelete" pulled from "%script%"
-	set {clanmsg.nopage} to coloured value "msg.nopage" pulled from "%script%"
-	set {clanmsg.nolider} to coloured value "msg.nolider" pulled from "%script%"
-	set {clanmsg.clanplayerset} to coloured value "msg.clanplayerset" pulled from "%script%"
-	set {clanmsg.ivitenoplayer} to coloured value "msg.ivitenoplayer" pulled from "%script%"
-	set {clanmsg.offline} to coloured value "msg.offline" pulled from "%script%"
-	set {clanmsg.invite} to coloured value "msg.invite" pulled from "%script%"
-	set {clanmsg.inviteplayer} to coloured value "msg.inviteplayer" pulled from "%script%"
-	set {clanmsg.invited} to coloured value "msg.invited" pulled from "%script%"
-	set {clanmsg.emptyinvite} to coloured value "msg.emptyinvite" pulled from "%script%"
-	set {clanmsg.listinvite} to coloured value "msg.listinvite" pulled from "%script%"
-	set {clanmsg.memberclan} to coloured value "msg.memberclan" pulled from "%script%"
-	set {clanmsg.joinclan} to coloured value "msg.joinclan" pulled from "%script%"
-	set {clanmsg.joinmsg} to coloured value "msg.joinmsg" pulled from "%script%"
-	set {clanmsg.noinvite} to coloured value "msg.noinvite" pulled from "%script%"
-	set {clanmsg.noclaim} to coloured value "msg.noclaim" pulled from "%script%"
-	set {clanmsg.nounclaim} to coloured value "msg.nounclaim" pulled from "%script%"
-	set {clanmsg.unclaim} to coloured value "msg.unclaim" pulled from "%script%"
-	set {clanmsg.claim} to coloured value "msg.claim" pulled from "%script%"
-	set {clanmsg.freeland} to coloured value "msg.freeland" pulled from "%script%"
-	set {clanmsg.claimed} to coloured value "msg.claimed" pulled from "%script%"
-	set {clanmsg.maxclaim} to coloured value "msg.maxclaim" pulled from "%script%"
-	set {clanmsg.clanclaim} to coloured value "msg.clanclaim" pulled from "%script%"
-	set {clanmsg.nohome} to coloured value "msg.nohome" pulled from "%script%"
-	set {clanmsg.sethome} to coloured value "msg.sethome" pulled from "%script%"
-	set {clanmsg.nosethome} to coloured value "msg.nosethome" pulled from "%script%"
-	set {clanmsg.tpdeny} to coloured value "msg.tpdeny" pulled from "%script%"
-	set {clanmsg.nomove} to coloured value "msg.nomove" pulled from "%script%"
-	set {clanmsg.delay} to coloured value "msg.delay" pulled from "%script%"
-	set {clanmsg.hometp} to coloured value "msg.hometp" pulled from "%script%"
-	set {clanmsg.noliderleave} to coloured value "msg.noliderleave" pulled from "%script%"
-	set {clanmsg.clanleave} to coloured value "msg.clanleave" pulled from "%script%"
-	set {clanmsg.memberleave} to coloured value "msg.memberleave" pulled from "%script%"
-	set {clanmsg.argnoclan} to coloured value "msg.argnoclan" pulled from "%script%"
-	set {clanmsg.nokick} to coloured value "msg.nokick" pulled from "%script%"
-	set {clanmsg.kick} to coloured value "msg.kick" pulled from "%script%"
-	set {clanmsg.memberkick} to coloured value "msg.memberkick" pulled from "%script%"
-	set {clanmsg.noplace} to coloured value "msg.noplace" pulled from "%script%"
-	set {clanmsg.nobreak} to coloured value "msg.nobreak" pulled from "%script%"
-	set {clanmsg.notag} to coloured value "msg.notag" pulled from "%script%"
-	set {clanmsg.badsizetag} to coloured value "msg.badsizetag" pulled from "%script%"
-	set {clanmsg.occupiedtag} to coloured value "msg.occupiedtag" pulled from "%script%"
-	set {clanmsg.tagset} to coloured value "msg.tagset" pulled from "%script%"
-	set {clanmsg.noopis} to coloured value "msg.noopis" pulled from "%script%"
-	set {clanmsg.badopis} to coloured value "msg.badopis" pulled from "%script%"
-	set {clanmsg.setopis} to coloured value "msg.setopis" pulled from "%script%"
-	set {clanmsg.noworld} to coloured value "msg.noworld" pulled from "%script%"
-	set {clanmsg.nofoundclan} to coloured value "msg.nofoundclan" pulled from "%script%"
-	set {clanmsg.regionset} to coloured value "msg.regionset" pulled from "%script%"
-	set {clanmsg.chunkempty} to coloured value "msg.chunkempty" pulled from "%script%"
-	set {clanmsg.nomoney} to coloured value "msg.nomoney" pulled from "%script%"
-	set {clanmsg.offclaim} to coloured value "msg.offclaim" pulled from "%script%"
-	set {clanmsg.unclaimall} to coloured value "msg.unclaimall" pulled from "%script%"
+	set {clanmsg.noperm} to coloured value "msg.noperm" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clanset} to coloured value "msg.clanset" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clanexist} to coloured value "msg.clanexist" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clannoname} to coloured value "msg.clannoname" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nosymbol} to coloured value "msg.nosymbol" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noclan} to coloured value "msg.noclan" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noclans} to coloured value "msg.noclans" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clancreate} to coloured value "msg.clancreate" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.norequired} to coloured value "msg.norequired" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.reload} to coloured value "msg.reload" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clandelete} to coloured value "msg.clandelete" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nopage} to coloured value "msg.nopage" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nolider} to coloured value "msg.nolider" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clanplayerset} to coloured value "msg.clanplayerset" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.ivitenoplayer} to coloured value "msg.ivitenoplayer" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.offline} to coloured value "msg.offline" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.invite} to coloured value "msg.invite" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.inviteplayer} to coloured value "msg.inviteplayer" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.invited} to coloured value "msg.invited" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.emptyinvite} to coloured value "msg.emptyinvite" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.listinvite} to coloured value "msg.listinvite" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.memberclan} to coloured value "msg.memberclan" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.joinclan} to coloured value "msg.joinclan" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.joinmsg} to coloured value "msg.joinmsg" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noinvite} to coloured value "msg.noinvite" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noclaim} to coloured value "msg.noclaim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nounclaim} to coloured value "msg.nounclaim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.unclaim} to coloured value "msg.unclaim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.claim} to coloured value "msg.claim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.freeland} to coloured value "msg.freeland" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.claimed} to coloured value "msg.claimed" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.maxclaim} to coloured value "msg.maxclaim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clanclaim} to coloured value "msg.clanclaim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nohome} to coloured value "msg.nohome" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.sethome} to coloured value "msg.sethome" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nosethome} to coloured value "msg.nosethome" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.tpdeny} to coloured value "msg.tpdeny" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nomove} to coloured value "msg.nomove" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.delay} to coloured value "msg.delay" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.hometp} to coloured value "msg.hometp" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noliderleave} to coloured value "msg.noliderleave" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.clanleave} to coloured value "msg.clanleave" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.memberleave} to coloured value "msg.memberleave" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.argnoclan} to coloured value "msg.argnoclan" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nokick} to coloured value "msg.nokick" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.kick} to coloured value "msg.kick" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.memberkick} to coloured value "msg.memberkick" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noplace} to coloured value "msg.noplace" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nobreak} to coloured value "msg.nobreak" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.notag} to coloured value "msg.notag" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.badsizetag} to coloured value "msg.badsizetag" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.occupiedtag} to coloured value "msg.occupiedtag" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.tagset} to coloured value "msg.tagset" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noopis} to coloured value "msg.noopis" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.badopis} to coloured value "msg.badopis" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.setopis} to coloured value "msg.setopis" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.noworld} to coloured value "msg.noworld" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nofoundclan} to coloured value "msg.nofoundclan" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.regionset} to coloured value "msg.regionset" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.chunkempty} to coloured value "msg.chunkempty" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.nomoney} to coloured value "msg.nomoney" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.offclaim} to coloured value "msg.offclaim" get of "plugins/Skript/scripts/%script%.yml"
+	set {clanmsg.unclaimall} to coloured value "msg.unclaimall" get of "plugins/Skript/scripts/%script%.yml"
 	clear {clanhelp::*}
 	clear {clanreg::*}
 	loop 20 times:
-		set {clanreg::%loop-number%} to coloured value "reg.no-%loop-number%" pulled from "%script%"
+		set {clanreg::%loop-number%} to coloured value "reg.no-%loop-number%" get of "plugins/Skript/scripts/%script%.yml"
 	loop 30 times:	
-		set {clanhelp::%loop-number%} to coloured value "help.co-%loop-number%" pulled from "%script%"
+		set {clanhelp::%loop-number%} to coloured value "help.co-%loop-number%" get of "plugins/Skript/scripts/%script%.yml"
 
 	set {kierunek::south.1} to "&7---&6[N]&7---&7-------------------------------"
 	set {kierunek::south.2} to "&6[W]&7----&6[E]&7-------------------------------"
