@@ -1,4 +1,4 @@
 Clan-by-Yooka
 =======
 
-Wymagany dodatke wildskript http://www.dzikoysk.net/wildskript/
+Wymagany dodatek wildskript http://www.dzikoysk.net/wildskript/
