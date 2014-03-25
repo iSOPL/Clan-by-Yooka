@@ -144,49 +144,53 @@ msg:
   unclaimall: <red>Odbespieczon wszystkie Claimy
 
 reg:
-  no-1: <red>Zakaz tworzenia nazw kalnu z dziwnymi symbolami - <gold>Usuniecie Kalnu
-  no-2: <red>tes2
-  no-3: <blue>Kupa
-  no-4: regulamin
-  no-5:
-  no-6:
-  no-7:
-  no-8:
-  no-9:
-  no-10:
-  no-11:
-  no-12:
-  no-13:
-  no-14:
-  no-15:
-  no-16:
-  no-17:
-  no-18:
-  no-19:
-  no-20:
+  - <red>Zakaz tworzenia nazw kalnu z dziwnymi symbolami - <gold>Usuniecie Kalnu
+  - <red>tes2
+  - <blue>Kupa
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+  - regulamin
+
 
 help:
-  co-1: <dark aqua>/clan create <nazwa> <white>- tworzenie klanu
-  co-2: <dark aqua>/clan usun <white>- usuwanie klanu
-  co-3: <dark aqua>/clan zapros <white>- zapraszanie graczy
-  co-4: <dark aqua>/clan zaproszeni <white>- lista zaproszonychg osob
-  co-5: <dark aqua>/clan akceptuj <nazwa klanu> <white>- akceptacja zaproszenia
-  co-6: <dark aqua>/clan opusc <white>- opuszczenie klanu
-  co-7: <dark aqua>/clan kick <white>- wyrzucanie gracza
-  co-8: <dark aqua>/clan info <white>- informacje o klanie
-  co-9: <dark aqua>/clan lista <white>- lista klanow
-  co-10: <dark aqua>/clan claim <white>- zajowanie terenu
-  co-11: <dark aqua>/clan unclaim <white>- odbespiecznie terenu
-  co-12: <dark aqua>/clan unclaimall <white>- odbespiecza wszystko
-  co-13: <dark aqua>/clan home <white>- tp do bazy
-  co-14: <dark aqua>/clan chunk <white>- lista zajetych chunkow
-  co-15: <dark aqua>/clan mapa <white>- mapa zajetych chunko
-  co-16: <dark aqua>/clan regulamin <white>- regulamin
-  co-17: <dark aqua>/clan pomoc <white>- pomoc
-  co-18: <dark aqua>/clan opis <white>- opis klanu
-  co-19: <dark aqua>/clan tag <white>- tag klanu
-  co-20: <dark aqua>/clan przedmioty <white>- Lista wymaganych przedmiotow
-  co-21: <dark aqua>/clan sethome <white>- ustawianie bazy
-  co-22: <dark aqua>/clan enemy <white>- ustawia relacje z innym klanem na enemy
-  co-23: <dark aqua>/clan ally <white>- ustawia relacje z innym klanem na ally
-  co-24: <dark aqua>/clan ally <nazwa klanu> akceptuj<white>- akceptacja relacji ally
+  - <dark aqua>/clan create <nazwa> <white>- tworzenie klanu
+  - <dark aqua>/clan usun <white>- usuwanie klanu
+  - <dark aqua>/clan zapros <white>- zapraszanie graczy
+  - <dark aqua>/clan zaproszeni <white>- lista zaproszonychg osob
+  - <dark aqua>/clan akceptuj <nazwa klanu> <white>- akceptacja zaproszenia
+  - <dark aqua>/clan opusc <white>- opuszczenie klanu
+  - <dark aqua>/clan kick <white>- wyrzucanie gracza
+  - <dark aqua>/clan info <white>- informacje o klanie
+  - <dark aqua>/clan lista <white>- lista klanow
+  - <dark aqua>/clan claim <white>- zajowanie terenu
+  - <dark aqua>/clan unclaim <white>- odbespiecznie terenu
+  - <dark aqua>/clan unclaimall <white>- odbespiecza wszystko
+  - <dark aqua>/clan home <white>- tp do bazy
+  - <dark aqua>/clan chunk <white>- lista zajetych chunkow
+  - <dark aqua>/clan mapa <white>- mapa zajetych chunko
+  - <dark aqua>/clan regulamin <white>- regulamin
+  - <dark aqua>/clan pomoc <white>- pomoc
+  - <dark aqua>/clan opis <white>- opis klanu
+  - <dark aqua>/clan tag <white>- tag klanu
+  - <dark aqua>/clan przedmioty <white>- Lista wymaganych przedmiotow
+  - <dark aqua>/clan sethome <white>- ustawianie bazy
+  - <dark aqua>/clan enemy <white>- ustawia relacje z innym klanem na enemy
+  - <dark aqua>/clan ally <white>- ustawia relacje z innym klanem na ally
+  - <dark aqua>/clan ally <nazwa klanu> akceptuj<white>- akceptacja relacji ally

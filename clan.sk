@@ -124,10 +124,17 @@ on load:
 	set {clanmsg.unclaimall} to coloured value "msg.unclaimall" get of "plugins/Skript/scripts/%script%.yml"
 	clear {clanhelp::*}
 	clear {clanreg::*}
-	loop 20 times:
-		set {clanreg::%loop-number%} to coloured value "reg.no-%loop-number%" get of "plugins/Skript/scripts/%script%.yml"
-	loop 30 times:	
-		set {clanhelp::%loop-number%} to coloured value "help.co-%loop-number%" get of "plugins/Skript/scripts/%script%.yml"
+	set {_reg} to coloured value list "reg" get of "plugins/Skript/scripts/%script%.yml"
+	replace "]" in {_reg} with ""
+	replace "[" in {_reg} with ""
+	set {clanreg::*} to {_reg} split at ", "
+
+
+	set {_help} to coloured value list "help" get of "plugins/Skript/scripts/%script%.yml"
+	replace "]" in {_help} with ""
+	replace "[" in {_help} with ""
+	set {clanhelp::*} to {_help} split at ", "
+
 
 	set {kierunek::south.1} to "&7---&6[N]&7---&7-------------------------------"
 	set {kierunek::south.2} to "&6[W]&7----&6[E]&7-------------------------------"
@@ -666,9 +673,10 @@ command /clan [<text>] [<text>] [<text>]:
 				add loop-number to {_lista}
 				if {_clanreg::%{_lista}%} is not set:
 					stop
-				send "&6%{_lista}%. %{_clanreg::%{_lista}%}%"
-				if {_lista} is equal to 10:
+				if loop-number is 11:
 					stop
+				send "&6%{_lista}%. %{_clanreg::%{_lista}%}%"
+
 
 		if arg 1 is "help" or "h" or "pomoc" or "p":
 			if player doesn't have permission "%{clanconf.perm}%.use.pomoc":
@@ -688,7 +696,7 @@ command /clan [<text>] [<text>] [<text>]:
 				send "%{clanmsg.nopage}%"
 				stop
 			if size of {clanhelp::*} is smaller than 1:
-				send "Nie znaleziono wpisu"
+				send "&c&LNie znaleziono wpisu"
 				stop
 			loop {clanhelp::*}:
 				add loop-value to {_clanhelp::*}
@@ -698,9 +706,10 @@ command /clan [<text>] [<text>] [<text>]:
 				add loop-number to {_lista}
 				if {_clanhelp::%{_lista}%} is not set:
 					stop
-				send "&6%{_lista}%. %{_clanhelp::%{_lista}%}%"
-				if {_lista} is equal to 10:
+				if loop-number is 11:
 					stop
+				send "&6%{_lista}%. %{_clanhelp::%{_lista}%}%"
+				
 		if arg 1 is "przedmioty":
 			if player doesn't have permission "%{clanconf.perm}%.use.przedmioty":
 				send "%{clanmsg.noperm}%"
@@ -719,7 +728,7 @@ command /clan [<text>] [<text>] [<text>]:
 				send "%{clanmsg.nopage}%"
 				stop
 			if size of {pay.create::*} is smaller than 1:
-				send "Nie znaleziono przedmiotow"
+				send "&c&LNie znaleziono przedmiotow"
 				stop
 			loop {pay.create::*}:
 				add loop-value to {_pay.create::*}
