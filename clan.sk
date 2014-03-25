@@ -641,9 +641,10 @@ command /clan [<text>] [<text>] [<text>]:
 				add loop-number to {_lista}
 				if {_clans::%{_lista}%} is not set:
 					stop
-				send "&6%{_lista}%. &3%{_clans::%{_lista}%}%"
-				if {_lista} is equal to 10:
+				if loop-number is 11:
 					stop
+				send "&6%{_lista}%. &3%{_clans::%{_lista}%}%"
+
 
 		if arg 1 is "regulamin":
 			if player doesn't have permission "%{clanconf.perm}%.use.regulamin":
