@@ -43,154 +43,135 @@ payclaimmony: 500
 
 #Przedmioty za claim #
 payclaimitem:
-  citem-1: 567 stone
-  citem-2: 64 dirt
-  citem-3: 
-  citem-4:
-  citem-5:
-  citem-6:
-  citem-7:
-  citem-8:
-  citem-9:
+  - 567 stone
+  - 64 dirt
+
 
 paycreate:
-  item-1: 64 diamond
-  item-2: 64 emerald
-  item-3: 12 blaze rod
-  item-4: 16 golden apple
-  item-5: 16 golden carrot
-  item-6:
-  item-7:
-  item-8:
-  item-9:
-  item-10:
-  item-11:
-  item-12:
-  item-13:
-  item-14:
-  item-15:
-  item-16:
-  item-17:
-  item-18:
-  item-19:
-  item-20:
+  - 64 diamond
+  - 64 emerald
+  - 12 blaze rod
+  - 16 golden apple
+  - 16 golden carrot
+
 
 info:
-  wersja: 0.21
+  wersja: 0.22
 
 msg:
-  noperm: <red>Brak Uprawnien
-  clanset: <red>Jestes juz w klanie
-  clanexist: <red>Klan o tej nazwie juz istnieje
-  clannoname: <red>Podaj nazwe Klanu
-  nosymbol: <red>Nazwa zawiera niedozwolony zank
-  clancreate: <dark green>Utworzyles klan<gold>
-  norequired: <red><bold>Nie masz wszystkich przedmiotow! Brakuje
-  reload: <red>Przeladowano
-  clandelete: <dark green><bold>Usunieto Klan
-  noclan: <red>Nie masz klanu
-  noclans: <red>Nie zaleziono zadnego klanu
-  nopage: <red>Nie ma takiej strony
-  nolider: <red>Nie jestes liderem
-  clanplayerset: <red>Ten garcz jest juz w innym klanie
-  ivitenoplayer: <red>Podaj nazwe garcza
-  offline: <red>Gracz jest offline
-  invite: <dark green>Zaprosiles<gold>
-  inviteplayer: <dark green><bold>Zostes zaproszony do klanu<gold>
-  invited: <red>Ten gracz jest juz zaproszony
-  emptyinvite: <red>Lista zaproszonych jest pusta
-  listinvite: <gold><bold>Lista zaproszonych
-  memberclan: <red>Ten gracz jest juz w twoim klanie
-  joinclan: <dark green><bold>Dolaczyles do kalnu<gold>
-  joinmsg: <dark green>dolaczyl do Klanu
-  noinvite: <red>Nie jestes zaproszony do tego klanu
-  noclaim: <red>Nie mozesz zajac tego chunka
-  nounclaim: <red>Nie mozesz odbespieczyc tego terenu
-  unclaim: <dark green>Odbezpieczono chunk<gold>
-  claim: <dark green>Zabespieczono chunk<gold>
-  freeland: <dark green>Wolna Ziemia
-  claimed: <dark green><bold>Lista zajetych chunkow
-  maxclaim: <red>Twoj klan osiągnl maxymalna liczbe zajetego terwenu
-  clanclaim: <red>Ten chunk jest juz zajety przez<gold>
-  nohome: <red>Nie mozesz ustawic tutaj bazy
-  sethome: <dark green>Ustawiono Baze dla twojego klanu
-  tpdeny: <red><bold>Teleportacja Anulowana
-  nosethome: <red>Nie ustawiono bazy Klanu
-  nomove: sekund. <red>Prosze sie nie ruszac
-  delay: <red>Teleportacja za
-  hometp: <dark green>Zostales przeniesiony do bazy
-  noliderleave: <red>Lider nie moze opuscic swojego klanu
-  clanleave: <dark green>Opuscil swoj Klan
-  memberleave: <red><bold>opuscil Klan
-  argnoclan: <red>Ten gracz nie ma kalnu
-  nokick: <red>Ten gracz nie jest w twoim klanie
-  kick: <dark green>Zostal wyrzucony z Kalnu
-  memberkick: <red><bold>Zostales wyrzucony z Klanu
-  noplace: <red>Nie mozesz tu budowac
-  nobreak: <red>Nie mozesz tu zniszczyc
-  notag: <red>Podaj nazwe tagu
-  badsizetag: <red>Przekroczyles dozwolona dlugosc tagu
-  occupiedtag: <red>Ten tag jest juz zajety
-  tagset: <dark green>Ustawiles Tag klanu na
-  noopis: <red>Podaj opis Klanu
-  badopis: <red>Opis klanu zawiera niedozwolony znak
-  setopis: <dark green>Ustawiono opis<gold>
-  noworld: <red>Nie mozesz zajac terenu na tej mapie
-  nofoundclan: <red>Nie znaleziono Klanu o tej nazwie
-  regionset: <red>Wykryto region. Nie mozesz go zajac
-  chunkempty: <red>Nie zajeto zadnego terenu
-  nomoney: <red>Nie mozesz zabespieczyc. Koszt claim to<gold>
-  offclaim: <red>Zajmowanie terenu jest wylaczone
-  unclaimall: <red>Odbespieczon wszystkie Claimy
+  noperm: '&cBrak Uprawnien'
+  clanset: '&cJestes juz w klanie'
+  clanexist: '&cKlan o tej nazwie juz istnieje'
+  clannoname: '&cPodaj nazwe Klanu'
+  nosymbol: '&cNazwa zawiera niedozwolony zank'
+  clancreate: '&2Utworzyles klan&6'
+  norequired: '&c&LNie masz wszystkich przedmiotow! Brakuje'
+  reload: '&cPrzeladowano'
+  clandelete: '&2&LUsunieto Klan'
+  noclan: '&2Nie masz klanu'
+  noclans: '&cNie zaleziono zadnego klanu'
+  nopage: '&cNie ma takiej strony'
+  nolider: '&cNie jestes liderem'
+  clanplayerset: '&cTen garcz jest juz w innym klanie'
+  ivitenoplayer: '&cPodaj nazwe garcza'
+  offline: '&c>Gracz jest offline'
+  invite: '&2Zaprosiles&6'
+  inviteplayer: '&2&LZostes zaproszony do klanu&6'
+  invited: '&cTen gracz jest juz zaproszony'
+  emptyinvite: '&cLista zaproszonych jest pusta'
+  listinvite: '&6&LLista zaproszonych'
+  memberclan: '&cTen gracz jest juz w twoim klanie'
+  joinclan: '&2&LDolaczyles do kalnu&6'
+  joinmsg: '&2dolaczyl do Klanu'
+  noinvite: '&cNie jestes zaproszony do tego klanu'
+  noclaim: '&cNie mozesz zajac tego chunka'
+  nounclaim: '&cNie mozesz odbespieczyc tego terenu'
+  unclaim: '&2Odbezpieczono chunk&6'
+  claim: '&2Zabespieczono chunk&6'
+  freeland: '&2Wolna Ziemia'
+  claimed: '&2&LLista zajetych chunkow'
+  maxclaim: '&cTwoj klan osiągnl maxymalna liczbe zajetego terwenu'
+  clanclaim: '&cTen chunk jest juz zajety przez&6'
+  nohome: '&cNie mozesz ustawic tutaj bazy'
+  sethome: '&2Ustawiono Baze dla twojego klanu'
+  tpdeny: '&c&LTeleportacja Anulowana'
+  nosethome: '&cNie ustawiono bazy Klanu'
+  nomove: 'sekund. &cProsze sie nie ruszac'
+  delay: '&cTeleportacja za'
+  hometp: '&2Zostales przeniesiony do bazy'
+  noliderleave: '&cLider nie moze opuscic swojego klanu'
+  clanleave: '&2Opuscil swoj Klan'
+  memberleave: '&c&Lopuscil Klan'
+  argnoclan: '&cTen gracz nie ma kalnu'
+  nokick: '&cTen gracz nie jest w twoim klanie'
+  kick: '&2Zostal wyrzucony z Kalnu'
+  memberkick: '&c&LZostales wyrzucony z Klanu'
+  noplace: '&cNie mozesz tu budowac'
+  nobreak: '&cNie mozesz tu zniszczyc'
+  notag: '&cPodaj nazwe tagu'
+  badsizetag: '&cPrzekroczyles dozwolona dlugosc tagu'
+  occupiedtag: '&cTen tag jest juz zajety'
+  tagset: '&2Ustawiles Tag klanu na'
+  noopis: '&cPodaj opis Klanu'
+  badopis: '&cOpis klanu zawiera niedozwolony znak'
+  setopis: '&2Ustawiono opis&6'
+  noworld: '&cNie mozesz zajac terenu na tej mapie'
+  nofoundclan: '&cNie znaleziono Klanu o tej nazwie'
+  regionset: '&cWykryto region. Nie mozesz go zajac'
+  chunkempty: '&cNie zajeto zadnego terenu'
+  nomoney: '&cNie mozesz zabespieczyc. Koszt claim to&6'
+  offclaim: '&cZajmowanie terenu jest wylaczone'
+  unclaimall: '&cOdbespieczon wszystkie Claimy'
+  noarg: '&cNieprawidlowy argument &6Uzyj: &7/clan h'
 
 reg:
-  - <red>Zakaz tworzenia nazw kalnu z dziwnymi symbolami - <gold>Usuniecie Kalnu
-  - <red>tes2
-  - <blue>Kupa
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
-  - regulamin
+  - '&cZakaz tworzenia nazw kalnu z dziwnymi symbolami - &6Usuniecie Kalnu'
+  - '&ctes2'
+  - 'Kupa'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
+  - 'regulamin'
 
 
 help:
-  - <dark aqua>/clan create <nazwa> <white>- tworzenie klanu
-  - <dark aqua>/clan usun <white>- usuwanie klanu
-  - <dark aqua>/clan zapros <white>- zapraszanie graczy
-  - <dark aqua>/clan zaproszeni <white>- lista zaproszonychg osob
-  - <dark aqua>/clan akceptuj <nazwa klanu> <white>- akceptacja zaproszenia
-  - <dark aqua>/clan opusc <white>- opuszczenie klanu
-  - <dark aqua>/clan kick <white>- wyrzucanie gracza
-  - <dark aqua>/clan info <white>- informacje o klanie
-  - <dark aqua>/clan lista <white>- lista klanow
-  - <dark aqua>/clan claim <white>- zajowanie terenu
-  - <dark aqua>/clan unclaim <white>- odbespiecznie terenu
-  - <dark aqua>/clan unclaimall <white>- odbespiecza wszystko
-  - <dark aqua>/clan home <white>- tp do bazy
-  - <dark aqua>/clan chunk <white>- lista zajetych chunkow
-  - <dark aqua>/clan mapa <white>- mapa zajetych chunko
-  - <dark aqua>/clan regulamin <white>- regulamin
-  - <dark aqua>/clan pomoc <white>- pomoc
-  - <dark aqua>/clan opis <white>- opis klanu
-  - <dark aqua>/clan tag <white>- tag klanu
-  - <dark aqua>/clan przedmioty <white>- Lista wymaganych przedmiotow
-  - <dark aqua>/clan sethome <white>- ustawianie bazy
-  - <dark aqua>/clan enemy <white>- ustawia relacje z innym klanem na enemy
-  - <dark aqua>/clan ally <white>- ustawia relacje z innym klanem na ally
-  - <dark aqua>/clan ally <nazwa klanu> akceptuj<white>- akceptacja relacji ally
+  - '&3/clan create <nazwa> &f- tworzenie klanu'
+  - '&3/clan usun &f- usuwanie klanu'
+  - '&3/clan zapros &f- zapraszanie graczy'
+  - '&3/clan zaproszeni &f- lista zaproszonychg osob'
+  - '&3/clan akceptuj <nazwa klanu> &f- akceptacja zaproszenia'
+  - '&3/clan opusc &f- opuszczenie klanu'
+  - '&3/clan kick &f- wyrzucanie gracza'
+  - '&3/clan info &f- informacje o klanie'
+  - '&3/clan lista &f- lista klanow'
+  - '&3/clan claim &f- zajowanie terenu'
+  - '&3/clan unclaim &f- odbespiecznie terenu'
+  - '&3/clan unclaimall &f- odbespiecza wszystko'
+  - '&3/clan home &f- tp do bazy'
+  - '&3/clan chunk &f- lista zajetych chunkow'
+  - '&3/clan mapa &f- mapa zajetych chunko'
+  - '&3/clan regulamin &f- regulamin'
+  - '&3/clan pomoc &f- pomoc'
+  - '&3/clan opis &f- opis klanu'
+  - '&3/clan tag &f- tag klanu'
+  - '&3/clan przedmioty &f- Lista wymaganych przedmiotow'
+  - '&3/clan sethome &f- ustawianie bazy'
+  - '&3/clan enemy &f- ustawia relacje z innym klanem na enemy'
+  - '&3/clan ally &f- ustawia relacje z innym klanem na ally'
+  - '&3/clan ally <nazwa klanu> akceptuj&f- akceptacja relacji ally'
